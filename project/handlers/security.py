@@ -9,5 +9,5 @@ class Logout(WebHandler):
 	pass
 	
 	
-class Signup(WebHandler):
+class Register(WebHandler):
 	pass

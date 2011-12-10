@@ -10,14 +10,14 @@ config = {}
 ## App settings
 config['apptools.project'] = {
 
-	'name': 'AppTools',
+	'name': 'occupy.is',
 
 	'version': {
-		'major': 1,
+		'major': 0,
 		'minor': 0,
-		'micro': 0,
-		'build': 20111009,
-		'release': 'BETA'
+		'micro': 1,
+		'build': 20111209,
+		'release': 'ALPHA'
 	}
 
 }
