@@ -1,0 +1,26 @@
+{% extends "layouts/main.html" %}
+
+
+{% block header %}
+	{% block liteheader %}{% endblock %}
+{% endblock %}
+
+
+{% block layout_wrap %}
+<div id='occupy' class='lite layout'>
+	{% block content %}
+
+		{# Page content must override this block. #}
+		
+		<h1>occupy the world!</h1>
+		<br />
+		<center>:)</center>
+
+	{% endblock %}
+</div>
+{% endblock %}
+
+
+{% block footer %}
+	{% block litefooter %}{% endblock %}
+{% endblock %}

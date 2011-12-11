@@ -1,0 +1,52 @@
+queue:
+
+- name: default # miscellaneous tasks
+  rate: 20/s
+
+- name: mail # outgoing mail
+  rate: 2000/d
+  target: outgoing
+  bucket_size: 50
+  max_concurrent_requests: 30  
+
+- name: xmpp # jabber push notifications
+  rate: 50/s
+  target: outgoing
+  bucket_size: 50
+  max_concurrent_requests: 40
+
+- name: push # browser push notifications
+  rate: 100/s
+  target: outgoing
+  bucket_size: 100
+  max_concurrent_requests: 100  
+
+- name: analyzer # analyzes datastore + blobstore data
+  rate: 100/s
+  target: analyzer
+  bucket_size: 100
+  max_concurrent_requests: 100
+
+- name: cacher # handles cache priming
+  rate: 100/s
+  target: api
+  bucket_size: 100
+  max_concurrent_requests: 100  
+
+- name: crawler # crawls news/media, social content sources
+  rate: 5/s
+  target: crawler
+  bucket_size: 10
+  max_concurrent_requests: 20
+
+- name: indexer # indexes posted/emailed in/crawled data
+  target: indexer
+  rate: 50/s
+  bucket_size: 100
+  max_concurrent_requests: 40
+  retry_parameters:
+    min_backoff_seconds: 5
+    max_backoff_seconds: 25
+    max_doublings: 3
+    task_retry_limit: 25
+    task_age_limit: 2d

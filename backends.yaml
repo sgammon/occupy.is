@@ -1,0 +1,26 @@
+backends:
+
+- name: crawler # outgoing crawl requests (pulls down HTML, raw data like CSV/XML/JSON and RSS/ATOM)
+  class: B1
+  options: dynamic, public
+  instances: 1
+
+- name: analyzer # reduces raw data into summed values, computed values, and trends
+  class: B4
+  instances: 1
+  options: dynamic, failfast
+
+- name: indexer # indexes data that is crawled/input/emailed in, makes it searchable
+  class: B8
+  options: dynamic, failfast
+  instances: 1
+
+- name: api # the service layer - api clients connect to this to get juicy data
+  class: B1
+  instances: 1
+  options: dynamic, public
+
+- name: data # mid-way cache, transaction layer, and data write controller
+  class: B8
+  instances: 1
+  options: public

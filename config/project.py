@@ -16,7 +16,7 @@ config['apptools.project'] = {
 		'major': 0,
 		'minor': 0,
 		'micro': 1,
-		'build': 20111209,
+		'build': 20111210,
 		'release': 'ALPHA'
 	}
 

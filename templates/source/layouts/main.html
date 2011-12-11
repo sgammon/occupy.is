@@ -1,0 +1,17 @@
+{% extends "core/base_web.html" %}
+
+{% block main %}
+
+	{# This is where we store templates for Mustache to access through JS. #}
+	<div id='templates' class='hidden resource'>
+		{% block jstemplates %}
+		{% endblock %}
+	</div>
+
+	{# This is where we apply classes for mobile/web/etc. Anything visual is eventually in this div. #}
+	<div id='app' class='web latest'>
+		{% block layout_wrap %}
+		{% endblock %}
+	</div>
+
+{% endblock %}

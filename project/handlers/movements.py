@@ -25,8 +25,14 @@ class Members(OccupyHandler):
 
 ## +=+=+ Frame Handlers +=+=+ ##
 class NewMovement(OccupyFrameHandler):
+
+	''' Frame that contains a form to create a new Movement. '''
+
 	pass
 
 
 class EditMovement(OccupyFrameHandler):
+
+	''' Frame that contains a form to edit an existing Movement. '''
+
 	pass

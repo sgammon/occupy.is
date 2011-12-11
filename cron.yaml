@@ -1,0 +1,5 @@
+cron:
+    
+- description: Homepage Warmup # homepage warmup
+  url: /
+  schedule: every 30 minutes
