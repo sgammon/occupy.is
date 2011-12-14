@@ -4,13 +4,24 @@
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-	{% include "core/__north.html" %}
+{% block prenorth %}{% endblock %}
+{% block north %}
+{% include "core/__north.html" %}
+{% endblock %}
+{% block postnorth %}{% endblock %}
 </head>
 
 <body>
+{% block prebody %}{% endblock %}
 {% block body %}
 {% endblock body %}
+{% block postbody %}{% endblock %}
 
+{% block presouth %}{% endblock %}
+{% block south %}
 {% include "core/__south.html" %}
+{% block page_scripts %}{% endblock %}
+{% endblock %}
+{% block postsouth %}{% endblock %}
 </body>
 </html>

@@ -1,12 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
 body {
-  font: 80% Verdana, sans-serif;
+  font: 0.8em Verdana, sans-serif;
 }
 
 h1 {
-  font: 48pt "Satisfy", cursive;
-  width: 100%;
-  text-align: center;
-  padding-top: 25px;
+  font: 38pt "Rosario", cursive;
+  font-weight: bold;
+  display: inline;
 }
 
 p {
@@ -16,51 +21,41 @@ p {
 
 #main {
   position: absolute;
+  top: 12%;
+  left: 15%;
+  bottom: 12%;
+  right: 15%;
+  padding: 1%;
+}
+
+header, footer {
+  z-index: 1000;
+  position: absolute;
+  display: block;
+  background: gray;
+  left: 15%;
+  right: 15%;
+  text-align: center;
+}
+
+header {
   top: 0;
-  left: 0;
+}
+
+footer {
   bottom: 0;
-  right: 0;
 }
 
-#welcome {
-  background: white;
-  width: 32em;
-  margin: 5em auto;
-  padding: 0 0 0.5em 1em;
-  border-radius: 15px;
+.highlight {
+  text-transform: uppercase;
+  background: url("/assets/img/static/layout/highlight-bg-1.png");
+  padding: 7px;
+  margin: 5px;
+  border-radius: 7px;
 }
 
-#debugtools ul.collapsed {
-  display: none;
-}
-#debugtools ul.expanded {
-  display: visible;
-  background: #dddddd;
-}
-#debugtools ul.expanded li {
-  list-style: none;
-}
-#debugtools ul li.section {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-top: 3px;
-  margin-right: 3em;
-  margin-bottom: 3px;
-  list-style: none;
-  background: #dddddd;
-}
-#debugtools ul li.section.closed {
-  background: #bbbbbb;
-}
-#debugtools ul li.section a {
-  font-size: 90%;
-}
-#debugtools ul li.section a.openclose {
-  padding-left: 20px;
-}
-#debugtools ul li.section a.openclose.opened {
-  background: #dddddd url("/assets/img/static/icons/toggle-minus.png") no-repeat left bottom;
-}
-#debugtools ul li.section a.openclose.closed {
-  background: #bbbbbb url("/assets/img/static/icons/toggle-plus.png") no-repeat left bottom;
+#maintitle {
+  position: absolute;
+  top: 15%;
+  left: 5%;
 }

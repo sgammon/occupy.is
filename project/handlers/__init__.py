@@ -68,6 +68,13 @@ class WebHandler(BaseHandler):
 				self.response.write('- at key '+str(k)+', the value: '+str(v)+'<br />')
 			self.response.write('<b>and that\'s all.</b><br />')
 
+		## environ
+		if len(self.request.environ) > 0:
+			self.response.write('<br /><b>sure enough, there\'s some environment stuff too:</b><br />')
+			for k, v in self.request.environ.items():
+				self.response.write('- at key '+str(k)+', the value: '+str(v)+'<br />')
+			self.response.write('<b>and that\'s all.</b><br />')
+
 		self.response.write('<br /><b>k thats all thanks bye</b>')
 
 		return

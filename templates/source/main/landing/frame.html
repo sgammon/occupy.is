@@ -1,11 +1,33 @@
 {% extends "layouts/lite.html" %}
 
+
+{% block postnorth %}
+<link rel='stylesheet' href="{{ asset.style('landing', 'site') }}">
+{% endblock %}
+
+
+{% block header %}
+	<header id='topwelcome' class='preview'>
+		<b>header</b>
+	</header>
+{% endblock %}
+
+
 {% block content %}
+	<div id='welcome'>
+		<h1 id='maintitle'>what is <span class='highlight'>occupy</span> to you?</h1>
+		<br />
+	</div>
+{% endblock %}
 
-<div id='welcome'>
-	<h1>occupy the world!</h1>
-	<br />
-	<center>mainpage :)</center>
-</div>
 
+{% block footer %}
+	<footer id='bottomwelcome' class='preview'>
+		<b>footer</b>
+	</footer>
+{% endblock %}
+
+
+{% block page_scripts %}
+<script src="{{ asset.script('landing', 'site') }}"></script>
 {% endblock %}

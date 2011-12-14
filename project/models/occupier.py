@@ -1,43 +1,113 @@
-from project.models import OccupyModel
+from project.models import OccupyModel, ndb
 
 
+#### +=+=+=+ Occupiers + Accounts +=+=+=+ ####
 class Occupier(OccupyModel):
 
 	''' Represents a concerned citizen who has signed themselves up as an Occupier (essentially a site user). '''
 
-	pass
+	## parent: none
+	## keyname: username (for use in URLs)
 
+	# name + basic ID
+	username = ndb.StringProeprty(indexed=True, required=True)
+	firstname = ndb.StringProperty(indexed=True, required=True)
+	lastname = ndb.StringProperty(indexed=True, required=False)
 
-class ProfilePicture(OccupyModel):
+	# demographics
+	dob = ndb.DateProperty(indexed=True, required=False)
+	ethnicity = ndb.StringProperty(repeated=True, indexed=False, required=False)
+	profession = ndb.StringProperty(indexed=False, required=False)
+	country = ndb.StringProperty(indexed=True, required=False)
 
-	''' An uploaded/attached profile picture for an Occupier. '''
-
-	pass
+	# fun profile stuff
+	aboutme = ndb.TextProperty()
+	manifesto = ndb.TextProperty()
 
 
 class OccupierAccount(OccupyModel):
 
 	''' An attached social media or local account for an Occupier. '''
 
-	pass
+	## parent: occupier
+	## keyname: username
+
+	# account ID info
+	id = ndb.StringProperty(indexed=True)
+	source = ndb.StringProperty(choices=['facebook', 'twitter', 'foursquare'], indexed=True)
+	account = ndb.UserProperty(indexed=True)
+	username = ndb.StringProperty(indexed=True)
+
+	# account links
+	profile_page = ndb.StringProperty(indexed=False)
+	display_public = ndb.BooleanProperty(indexed=False)
+
+	# crawl/storage info
+	authorized = ndb.BooleanProperty(default=False, indexed=True)
+	crawl_posts = ndb.BooleanProperty(default=False, indexed=True)
 
 
-class StarredTopic(OccupyModel):
+#### +=+=+=+ Attached Media +=+=+=+ ####
+class ProfilePicture(OccupyModel):
+
+	''' An uploaded/attached profile picture for an Occupier. '''
+
+	## parent: occupier
+	## keyname: none
+
+	# basic data
+	occupier = ndb.KeyProperty(indexed=True)
+	caption = ndb.StringProperty(indexed=False)
+
+	# blob/serving data
+	blob_ref = ndb.BlobKeyProperty(indexed=True)
+	enable_fast_serving = ndb.BooleanProperty(indexed=True)
+	fast_serving_href = ndb.StringProperty(indexed=False)
+
+	# img data
+	width = ndb.IntegerProperty(indexed=False)
+	height = ndb.IntegerProperty(indexed=False)
+
+
+#### +=+=+=+ Starred Items +=+=+=+ ####
+class OccupierStarredItem(OccupyModel):
+
+	''' An item that an Occupier has starred. '''
+
+	## parent: occupier
+	## keyname: see subclasses
+
+	star = ndb.KeyProperty(indexed=True)
+
+
+class StarredTopic(OccupierStarredItem):
 
 	''' Indicates that an Occupier has starred a topic. '''
 
-	pass
+	## parent: occupier
+	## keyname: str(key(topic))
+
+	occupier = ndb.KeyProperty(indexed=True)
+	topic = ndb.KeyProperty(indexed=True)
 
 
-class StarredComment(OccupyModel):
+class StarredComment(OccupierStarredItem):
 
 	'''  Indicates that an Occupier has starred a comment. '''
 
-	pass
+	## parent: occupier
+	## keyname: str(key(comment))
+
+	occupier = ndb.KeyProperty(indexed=True)
+	comment = ndb.KeyProperty(indexed=True)
 
 
-class StarredMovement(OccupyModel):
+class StarredMovement(OccupierStarredItem):
 
 	''' Indicates that an Occupier has starred a movement. '''
 
-	pass
+	## parent: occupier
+	## keyname: str(key(movement))
+
+	occupier = ndb.KeyProperty(indexed=True)
+	movement = ndb.KeyProperty(indexed=True)

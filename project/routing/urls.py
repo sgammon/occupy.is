@@ -9,9 +9,9 @@ from webapp2_extras.routes import HandlerPrefixRoute
 
 rules = [
 
-	HandlerPrefixRoute('project.handlers.', [	
+	HandlerPrefixRoute('project.handlers.', [
 
-		
+
 		## == Scope: Global == ##
 		DomainRoute('occupy.*', [
 
@@ -53,10 +53,8 @@ rules = [
 
 				])
 			]),
-
 		
 		]),
-		
 
 		## == Scope: Movement == ##
 		DomainRoute('<movement>.occupy.*', [
@@ -73,8 +71,8 @@ rules = [
 				])
 			]),
 
-		]),
 
+		]),
 
 		## == All Scopes: Topic URLs == ##
 		HandlerPrefixRoute('topics.', [
@@ -85,6 +83,6 @@ rules = [
 
 			])
 		])
-	
+
 	])
 ]

@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Rosario";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Rosario Bold"), local("Rosario-Bold"), url("http://themes.googleusercontent.com/static/fonts/rosario/v5/C6vOqPM2grRKaQTsxWhqnL3hpw3pgy2gAi-Ip7WPMi0.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Viga";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Viga-Regular"), url("http://themes.googleusercontent.com/static/fonts/viga/v1/hRYG5a73hsnE-Hek-8TjTfesZW2xOQ-xsNqO47m55DA.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Rosario";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Rosario Regular"), local("Rosario-Regular"), url("http://themes.googleusercontent.com/static/fonts/rosario/v5/1czDsfUw1sIxXBq0PGI58ALUuEpTyoUstqEm5AMlJo4.woff") format("woff");
+}

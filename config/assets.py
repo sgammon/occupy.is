@@ -31,6 +31,7 @@ config['apptools.project.assets'] = {
 				'amplify': {'min': True, 'version': '1.0.0'}, # AmplifyJS - for request, local storage + pubsub management
 				'modernizr': {'min': True, 'version': '2.0'}, # Modernizr - browser polyfill + compatibility testing
 				'lawnchair': {'version': '0.6.3'}, # Lawnchair: Client-side persistent storage
+				'underscore': {'min': True, 'version': '1.2.3'} # Underscore: the functional side of javascript
 			}
 		
 		},
@@ -44,32 +45,13 @@ config['apptools.project.assets'] = {
 			},
 
 			'assets': {
-				'base': {'min': True, 'version': 0.1}, # milk (mustasche for coffee), _underscore, _root
-				'rpc': {'min': True, 'version': 0.1}, # rpc framework, rpc caching
-				'storage': {'min': True, 'version': 0.1}, # local storage adapter
+				'base': {'min': True, 'version': 0.1} # milk (mustasche for coffee), _underscore, _root
 			}
 	
 		},
 		
-		### Browser feature Polyfills ###
-		('polyfills', 'core/polyfills'): { 
-
-			'config': {
-				'version_mode': 'getvar',
-				'bundle': 'polyfills.bundle.min.js'
-			},
-			
-			'assets': {
-				'json2': {'min': True}, # Adds JSON support to old IE and others that don't natively support it
-				'history': {'min': True}, # Adds support for history management to old browsers
-				'rgbcolor': {'min': True}, # Adds support for RGB color for CanVG
-				'canvg': {'min': True} # Renders SVG over canvas (good for &droid)
-			}
-
-		},
-		
 		### jQuery Core & Plugins ###
-		('jquery', 'jquery'): { 
+		('jquery', 'core'): { 
 		
 			'config': {
 				'version_mode': 'getvar',				
@@ -84,7 +66,38 @@ config['apptools.project.assets'] = {
 			
 		},
 		
-		'belated_png': {'path': 'util/dd_belatedpng.js'} # Belated PNG fix
+		'belated_png': {'path': 'util/dd_belatedpng.js'}, # Belated PNG fix
+
+		### Occupy Scripts ###
+		('occupy', 'occupy'): {
+			
+			'config': {
+				'version_mode': 'getvar',
+				'bundle': 'occupy.bundle.min.js'
+			},
+
+			'assets': {
+				'app': {'min': True, 'version': '0.0.1'} # main occupy.js
+			}
+
+		},
+
+		### Site Scripts ###
+		('site', 'occupy/site'): {
+			
+			'config': {
+				'version_mode': 'getvar',
+				'bundle': 'site.bundle.min.js'
+			},
+
+			'assets': {
+				'landing': {'min': True, 'version': '0.0.1'},
+				'topic': {'min': True, 'version': '0.0.1'},
+				'occupier': {'min': True, 'version': '0.0.1'},
+				'movement': {'min': True, 'version': '0.0.1'}
+			}
+
+		}
 	
 	},
 
@@ -92,7 +105,7 @@ config['apptools.project.assets'] = {
 	# Cascading Style Sheets
 	'style': {
 		
-		# Compiled (SASS) FCM Stylesheets
+		# Main Stylesheets
 		('compiled', 'compiled'): {
 		
 			'config': {
@@ -101,15 +114,15 @@ config['apptools.project.assets'] = {
 			},
 		
 			'assets': {
-				'main': {'version': 0.1}, # reset, main, layout, forms
+				'main': {'version': 0.1}, # reset, main
 				'ie': {'version': 0.1}, # fixes for internet explorer (grrr...)
 				'print': {'version': 0.1} # proper format for printing
 			}
 		
 		},
 		
-		# Content-section specific stylesheets
-		('site', 'compiled/site'): {
+		# Site-Specific Stylesheets
+		('occupy', 'compiled/occupy'): {
 		
 			'config': {
 				'min': True,
@@ -117,9 +130,27 @@ config['apptools.project.assets'] = {
 			},
 			
 			'assets': {
+				'app': {'version': 0.1}, # the app's css - layout/main/social/etc
 			}
 		
 		},
+
+		# Content Section-Specific Stylesheets
+		('site', 'compiled/occupy/site'): {
+			
+			'config': {
+				'min': True,
+				'version_mode': 'getvar'
+			},
+
+			'assets': {
+				'landing': {'version': 0.1},
+				'topic': {'version': 0.1},
+				'occupier': {'version': 0.1},
+				'movement': {'version': 0.1}
+			}
+
+		}
 			
 	},
 

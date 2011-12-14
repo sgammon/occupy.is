@@ -1,0 +1,19 @@
+header.expanded {
+  height: 20%;
+}
+header.preview {
+  height: 12%;
+}
+header.collapsed {
+  height: 5%;
+}
+
+footer.expanded {
+  height: 67%;
+}
+footer.preview {
+  height: 40%;
+}
+footer.collapsed {
+  height: 5%;
+}

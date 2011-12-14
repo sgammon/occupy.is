@@ -13,8 +13,9 @@ def run(environment):
         yield u'\n\n<title>'
         for event in context.blocks['title'][0](context):
             yield event
-        yield u'</title>\n\n<!-- Stylesheets -->\n<style>@import url(http://fonts.googleapis.com/css?family=Satisfy);</style>\n<link rel="stylesheet" href="%s">\n\n' % (
+        yield u'</title>\n\n<!-- Stylesheets -->\n<link rel="stylesheet" href="%s">\n<link rel="stylesheet" href="%s">\n\n' % (
             context.call(environment.getattr(l_asset, 'style'), 'main', 'compiled'), 
+            context.call(environment.getattr(l_asset, 'style'), 'app', 'occupy'), 
         )
         if environment.getattr(l_page, 'ie'):
             if 0: yield None
@@ -36,5 +37,5 @@ def run(environment):
                 yield to_string(l_title)
 
     blocks = {'title': block_title}
-    debug_info = '1=10&3=14&7=17&9=19&10=22&3=25'
+    debug_info = '1=10&3=14&6=17&7=18&9=20&10=23&3=26'
     return locals()

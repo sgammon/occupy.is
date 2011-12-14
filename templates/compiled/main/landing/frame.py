@@ -14,8 +14,30 @@ def run(environment):
 
     def block_content(context, environment=environment):
         if 0: yield None
-        yield u"\n\n<div id='welcome'>\n\t<h1>occupy the world!</h1>\n\t<br />\n\t<center>mainpage :)</center>\n</div>\n\n"
+        yield u"\n\t<div id='welcome'>\n\t\t<h1 id='maintitle'>what is <span class='highlight'>occupy</span> to you?</h1>\n\t\t<br />\n\t</div>\n"
 
-    blocks = {'content': block_content}
-    debug_info = '1=9&3=15'
+    def block_header(context, environment=environment):
+        if 0: yield None
+        yield u"\n\t<header id='topwelcome' class='preview'>\n\t\t<b>header</b>\n\t</header>\n"
+
+    def block_page_scripts(context, environment=environment):
+        l_asset = context.resolve('asset')
+        if 0: yield None
+        yield u'\n<script src="%s"></script>\n' % (
+            context.call(environment.getattr(l_asset, 'script'), 'landing', 'site'), 
+        )
+
+    def block_postnorth(context, environment=environment):
+        l_asset = context.resolve('asset')
+        if 0: yield None
+        yield u'\n<link rel=\'stylesheet\' href="%s">\n' % (
+            context.call(environment.getattr(l_asset, 'style'), 'landing', 'site'), 
+        )
+
+    def block_footer(context, environment=environment):
+        if 0: yield None
+        yield u"\n\t<footer id='bottomwelcome' class='preview'>\n\t\t<b>footer</b>\n\t</footer>\n"
+
+    blocks = {'content': block_content, 'header': block_header, 'page_scripts': block_page_scripts, 'postnorth': block_postnorth, 'footer': block_footer}
+    debug_info = '1=9&16=15&9=19&31=23&32=27&4=30&5=34&24=37'
     return locals()

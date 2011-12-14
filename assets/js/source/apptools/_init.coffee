@@ -1,36 +1,49 @@
 
 class AppTools
 	
-	constructor: (@config)  ->
+	constructor: (window)  ->
 		
-		## Sys API
-		@sys = new CoreSysAPI(@)
+		## Library Bridge
+		@lib = {}
 
+		## Async Loader
+		@lib.modernizr = window.Modernizr
+		
+		@load = (fragment) =>
+			return @lib.modernizr.load(fragment)
+
+		## Backbone
+		@lib.backbone = window.Backbone
+
+		## Lawnchair
+		@lib.lawnchair = window.Lawnchair
+
+		## Dev Tools
+		@dev = new CoreDevAPI(@)
+		
 		## Agent API
 		@agent = new CoreAgentAPI(@)
 		@agent.discover()
 		
 		## Events API
-		@events = new CoreEventsAPI(@)		
-		
-		## Model API
-		@model = new CoreModelAPI(@)
+		@events = new CoreEventsAPI(@)
 
-		## Javascript API Methods
-		@api = new CoreAPIBridge(@)
-				
+		# Register builtin events...
+		@events.register 'PLATFORM_INIT'		
+		@events.register 'PLATFORM_READY'
+		
 		## Users API
 		@user = new CoreUserAPI(@)
 		
 		## RPC API
-		@rpc = new CoreRPCAPI(@)
+		@api = new CoreRPCAPI(@)
 		
 		## Live API
 		@push = new CorePushAPI(@)
-		
+
 		return @
 
 
-window.apptools = new AppTools()
+window.apptools = new AppTools(window)
 if $?
 	$.extend(apptools: window.apptools)

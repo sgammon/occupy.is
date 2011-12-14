@@ -7,12 +7,14 @@ def run(environment):
         l_asset = context.resolve('asset')
         l_page = context.resolve('page')
         if 0: yield None
-        yield u'<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>\n<script>window.jQuery || document.write(\'<script src="js/libs/jquery-1.6.2.min.js"><\\/script>\')</script>\n\n<!-- Base Scripts -->\n<script src="%s"></script>\n<script src="%s"></script>\n<script src="%s"></script>\n<script src="%s"></script>\n\n<!-- Project Scripts -->\n<script src="%s"></script>\n\n' % (
-            context.call(environment.getattr(l_asset, 'script'), 'base', 'apptools'), 
+        yield u'<!-- jQuery -->\n<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>\n<script>window.jQuery || document.write(\'<script src="%s"><\\/script>\')</script>\n\n<!-- Base Scripts -->\n<script src="%s"></script>\n<script src="%s"></script>\n<script src="%s"></script>\n<script src="%s"></script>\n\n<!-- Project Scripts -->\n<script src="%s"></script>\n<script src="%s"></script>\n\n' % (
+            context.call(environment.getattr(l_asset, 'script'), 'core', 'jquery'), 
+            context.call(environment.getattr(l_asset, 'script'), 'underscore', 'core'), 
             context.call(environment.getattr(l_asset, 'script'), 'modernizr', 'core'), 
-            context.call(environment.getattr(l_asset, 'script'), 'storage', 'apptools'), 
-            context.call(environment.getattr(l_asset, 'script'), 'rpc', 'apptools'), 
+            context.call(environment.getattr(l_asset, 'script'), 'backbone', 'core'), 
+            context.call(environment.getattr(l_asset, 'script'), 'lawnchair', 'core'), 
             context.call(environment.getattr(l_asset, 'script'), 'base', 'apptools'), 
+            context.call(environment.getattr(l_asset, 'script'), 'app', 'occupy'), 
         )
         if environment.getattr(l_page, 'analytics'):
             if 0: yield None
@@ -24,5 +26,5 @@ def run(environment):
         yield u'\n\n<!--[if lt IE 7 ]>\n\t<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>\n\t<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>\n<![endif]-->'
 
     blocks = {}
-    debug_info = '5=11&6=12&7=13&8=14&11=15&13=17&15=20'
+    debug_info = '3=11&6=12&7=13&8=14&9=15&12=16&13=17&15=19&17=22'
     return locals()
