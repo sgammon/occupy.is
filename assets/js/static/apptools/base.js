@@ -1,5 +1,5 @@
 (function() {
-  var AppTools, CoreAPI, CoreAgentAPI, CoreDevAPI, CoreEventsAPI, CoreModelAPI, CorePushAPI, CoreRPCAPI, CoreSysAPI, CoreUserAPI, Expand, Find, Milk, Parse, RPCAPI, RPCRequest, TemplateCache, key;
+  var AppTools, CoreAPI, CoreAgentAPI, CoreDevAPI, CoreEventsAPI, CoreModelAPI, CorePushAPI, CoreRPCAPI, CoreStorageAPI, CoreSysAPI, CoreUserAPI, Expand, Find, Milk, Parse, RPCAPI, RPCRequest, TemplateCache, key;
   var __slice = Array.prototype.slice, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -600,6 +600,11 @@
     }
     return CoreEventsAPI;
   })();
+  CoreStorageAPI = (function() {
+    __extends(CoreStorageAPI, CoreAPI);
+    function CoreStorageAPI(apptools) {}
+    return CoreStorageAPI;
+  })();
   RPCAPI = (function() {
     function RPCAPI(name, base_uri, methods, config) {
       var method, _i, _len, _ref;
@@ -698,6 +703,16 @@
         this.envelope.agent = agent;
       }
     }
+    RPCRequest.prototype.multiplex = function() {
+      var _ref, _ref2;
+      if ((_ref = this.envelope) != null) {
+        _ref.opts.alt = 'channel';
+      }
+      if ((_ref2 = this.envelope) != null) {
+        _ref2.opts.token = $.apptools.push.state.token;
+      }
+      $.apptools.push.expect(this);
+    };
     RPCRequest.prototype.fulfill = function() {
       var callbacks, config, defaultFailureCallback, defaultSuccessCallback;
       callbacks = arguments[0], config = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
@@ -1106,8 +1121,36 @@
   window.RPCRequest = RPCRequest;
   CorePushAPI = (function() {
     __extends(CorePushAPI, CoreAPI);
-    function CorePushAPI() {
-      CorePushAPI.__super__.constructor.apply(this, arguments);
+    function CorePushAPI(apptools) {
+      apptools.events.register('SOCKET_OPEN');
+      apptools.events.register('SOCKET_CLOSE');
+      apptools.events.register('SOCKET_ACTIVITY');
+      apptools.events.register('SOCKET_EXPECT');
+      apptools.events.register('SOCKET_MESSAGE');
+      apptools.events.register('SOCKET_ERROR');
+      this.connect = function() {};
+      this.disconnect = function() {};
+      this.expect = function(request) {};
+      this.state = {
+        token: null,
+        socket: null,
+        channel: null,
+        activity: {
+          expecting: {},
+          complete: {},
+          error: {}
+        }
+      };
+      this.socket = {
+        establish: function() {},
+        register: function() {}
+      };
+      this.events = {
+        open: function() {},
+        message: function() {},
+        error: function() {},
+        close: function() {}
+      };
     }
     return CorePushAPI;
   })();
@@ -1137,6 +1180,7 @@
       this.user = new CoreUserAPI(this);
       this.api = new CoreRPCAPI(this);
       this.push = new CorePushAPI(this);
+      this.storage = new CoreStorageAPI(this);
       return this;
     }
     return AppTools;

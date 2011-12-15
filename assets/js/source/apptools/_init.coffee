@@ -41,6 +41,9 @@ class AppTools
 		## Live API
 		@push = new CorePushAPI(@)
 
+		## Storage API
+		@storage = new CoreStorageAPI(@)
+
 		return @
 
 

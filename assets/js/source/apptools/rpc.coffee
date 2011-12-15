@@ -64,7 +64,14 @@ class RPCRequest
 			@envelope.opts = opts
 		if agent?
 			@envelope.agent = agent
-		
+	
+	multiplex: () ->
+		@envelope?.opts.alt = 'channel'
+		@envelope?.opts.token = $.apptools.push.state.token
+
+		$.apptools.push.expect(@)
+		return
+
 	fulfill: (callbacks, config...) ->
 	
 		if not callbacks?.success
