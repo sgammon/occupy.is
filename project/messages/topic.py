@@ -1,11 +1,83 @@
 from protorpc import messages
 
 
-class HelloRequest(messages.Message):
+class NewTopicRequest(messages.Message):
 
-	name = messages.StringField(1)
+	pass
 
 
-class HelloResponse(messages.Message):
+class NewTopicResponse(messages.Message):
 
-	message = messages.StringField(1)
+	pass
+
+
+class GetTopicRequest(messages.Message):
+
+	pass
+
+
+class GetTopicResponse(messages.Message):
+
+	pass
+
+
+class TopicStatsRequest(messages.Message):
+
+	pass
+
+
+class TopicStatsResponse(messages.Message):
+
+	pass
+
+
+class ListTopicRequest(messages.Message):
+
+	pass
+
+
+class ListTopicResponse(messages.Message):
+
+	pass
+
+
+class UpvoteTopicRequest(messages.Message):
+
+	pass
+
+
+class UpvoteTopicResponse(messages.Message):
+
+	pass
+
+
+class DownvoteTopicRequest(messages.Message):
+
+	pass
+
+
+class DownvoteTopicResponse(messages.Message):
+
+	pass
+
+
+class StarTopicRequest(messages.Message):
+
+	pass
+
+
+class StarTopicResponse(messages.Message):
+
+	pass
+
+
+class CommentTopicRequest(messages.Message):
+
+	pass
+
+
+class CommentTopicResponse(messages.Message):
+
+	pass
+
+	

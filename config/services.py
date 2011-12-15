@@ -42,42 +42,90 @@ config['apptools.project.services'] = {
 		## Movement API Service
 		'movement': {
 			'enabled': False,
+			'service': 'project.services.movement.MovementService',
 			'methods': ['new', 'get', 'stats', 'list', 'star', 'comment'],
+
+			'config': {
+				'caching': 'none',
+				'security': 'none',
+				'recording': 'none'
+			}
+
 		},
 
 
 		## Occupier API Service
 		'occupier': {
 			'enabled': False,
+			'service': 'project.services.occupier.OccupierService',
 			'methods': ['new', 'get', 'avatar', 'message'],
+
+			'config': {
+				'caching': 'none',
+				'security': 'none',
+				'recording': 'none'
+			}
+
 		},
 
 
 		## Search API Service
 		'search': {
 			'enabled': False,
+			'service': 'project.services.search.SearchService',
 			'methods': ['autocomplete', 'quicksearch', 'fullsearch'],
+
+			'config': {
+				'caching': 'none',
+				'security': 'none',
+				'recording': 'none'
+			}
+
 		},
 
 
 		## Social API Service
 		'social': {
 			'enabled': False,
+			'service': 'project.services.social.SocialService',
 			'methods': ['notifications', 'alerts'],
+
+			'config': {
+				'caching': 'none',
+				'security': 'none',
+				'recording': 'none'
+			}
+
 		},
 
 
 		## Authorization/Authentication API Service
 		'auth': {
 			'enabled': False,
+			'service': 'project.services.auth.AuthService',
 			'methods': ['login', 'logout', 'connect'],
+
+			'config': {
+				'caching': 'none',
+				'security': 'none',
+				'recording': 'none'
+			}
+
 		},
 
 
 		## Feed API Service
 		'feed': {
 			'enabled': False,
-			'methods': ['main', 'movement', 'topic', 'occupier']
+			'service': 'project.services.feed.FeedService',
+			'methods': ['main', 'movement', 'topic', 'occupier'],
+			
+			'config': {
+				'caching': 'none',
+				'security': 'none',
+				'recording': 'none'
+			}
+
 		}
 
 		
