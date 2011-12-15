@@ -18,3 +18,39 @@
   font-weight: normal;
   src: local("Rosario Regular"), local("Rosario-Regular"), url("http://themes.googleusercontent.com/static/fonts/rosario/v5/1czDsfUw1sIxXBq0PGI58ALUuEpTyoUstqEm5AMlJo4.woff") format("woff");
 }
+
+#topicstream {
+  position: absolute;
+  right: 10%;
+  top: 30%;
+  width: 46%;
+  height: 100%;
+}
+#topicstream #streamcontainer {
+  overflow: hidden;
+}
+#topicstream #streamcontainer .streamitem {
+  background: gray;
+  height: 85px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+#topicstream #streamcontainer .streamitem .stream-content {
+  padding: 7px;
+  margin-left: 3px;
+}
+#topicstream #streamcontainer .streamitem .stream-content .title {
+  color: #222222;
+  font-weight: bold;
+  font-size: 1em;
+}
+#topicstream #streamcontainer .streamitem .stream-content .close-button {
+  margin-right: 10px;
+  opacity: 0.5;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+#topicstream #streamcontainer .streamitem .stream-content .close-button:hover {
+  opacity: 0.9;
+  background: blue;
+}

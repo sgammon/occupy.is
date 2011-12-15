@@ -15,8 +15,8 @@ config['apptools.project'] = {
 	'version': {
 		'major': 0,
 		'minor': 0,
-		'micro': 1,
-		'build': 20111210,
+		'micro': 2,
+		'build': 20111215,
 		'release': 'ALPHA'
 	}
 
@@ -46,6 +46,11 @@ config['apptools.project.output'] = {
 		'serving_mode': 'local', ## 'local' or 'cdn' (CDN prefixes all assets with an absolute URL)
 		'cdn_prefix': [] ## CDN prefix/prefixes - a string is used globally, a list of hostnames is selected from randomly for each asset
 	}
+
+}
+
+## Output layer - Main handler settings
+config['apptools.project.output.WebHandler'] = {
 
 }
 

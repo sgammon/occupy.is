@@ -7,15 +7,26 @@
 
 body
 	font: .8em Verdana, sans-serif
+	background: url('/assets/img/static/layout/main-bg-1.png')
 
 h1
-	font: 38pt 'Rosario', cursive
+	font: 24pt 'Rosario', cursive
 	font-weight: bold
-	display: inline
+	display: block
+
+a
+	text-decoration: none
+	color: #f7d6a7
+
+	&:visited
+		color: #f7d6a7
+
+	&:active
+		color: #f7d6a7
 
 p
-	margin: 15px 0
-	padding: 5px 0
+	margin: 0
+	padding: 5px
 
 
 // Main Content Divs
@@ -23,7 +34,7 @@ p
 	position: absolute
 	top: 12%
 	left: 15%
-	bottom: 12%
+	bottom: 0
 	right: 15%
 	padding: 1%
 
@@ -31,23 +42,109 @@ p
 // Main Header + Footer
 header, footer
 	z-index: 1000
-	position: absolute
+	position: fixed
 	display: block
-	background: gray
 	left: 15%
 	right: 15%
-	text-align: center
+	overflow: hidden
+
+	h1
+		float: left
+
+	.panetools
+		float: right
 
 header
+
 	top: 0
+	opacity: 0.8
+
+	.header
+		background: #8a775d
+
+	.content
+		background: #8a775d
+		border-bottom-left-radius: 8px
+		border-bottom-right-radius: 8px
 
 footer
+
 	bottom: 0
+	opacity: 0.8
+
+	.header
+		background: #8a775d
+		border-top-left-radius: 8px
+		border-top-right-radius: 8px
+
+
+// Basic, Reusable Classes
+.hidden
+	display: none
+	visibility: hidden
+
+.visualhidden
+	visibility: hidden
+
+.floatleft
+	float: left
+
+.floatright
+	float: right
+
+.clearleft
+	clear: left
+
+.clearright
+	clear: right
+
+.clearboth
+	clear: both
+
+.fullwidth
+	width: 100%
+
+.fullheight
+	height: 100%
+
+.halfwidth
+	width: 49%
+
+.halfheight
+	height: 49%
+
+.absolute
+	position: absolute
+
+.relative
+	position: relative
+
+.inline
+	display: inline
+
+.block
+	display: block
+
+.snapright
+	right: 0
+
+.snapleft
+	left: 0
+
+.snapup
+	top: 0
+
+.snapdown
+	bottom: 0
+
+.noun
+	color: #444
+	padding-left: 8px
+	padding-right: 8px
 
 
 // Site Decoration
 .highlight
-	text-transform: uppercase
 	background: url('/assets/img/static/layout/highlight-bg-1.png')
 	padding: 7px
 	margin: 5px
@@ -58,4 +155,59 @@ footer
 #maintitle
 	position: absolute
 	top: 15%
-	left: 5%
+	left: 10%
+	float: left
+	font-size: 38pt
+
+	.highlight
+		text-transform: uppercase
+		display: inline
+
+// Statusbox + Form
+#poststatus
+	position: absolute
+	top: 15%
+	right: 10%
+	margin-top: 5px
+	float: right
+	width: 46%
+	height: 60px
+
+	#tellus
+		-webkit-appearance: none
+		width: 100%
+		height: 60px
+		padding-right: 5px
+		padding-left: 5px
+		font-size: 18pt
+
+
+// Forms
+input.large
+	height: 25px
+
+
+// Panes
+.pane
+	
+	.header
+		padding: 10px
+		position: absolute
+		left: 0
+		height: 45px
+		right: 0
+		top: 0
+
+		h1
+			display: block
+			margin-right: 10px
+	
+	.content
+		padding: 1%
+		margin: 0
+		position: absolute
+		top: 55px
+		background: #8a775d
+		bottom: 0
+		left: 0
+		right: 0

@@ -114,7 +114,7 @@ config['apptools.project.assets'] = {
 			},
 		
 			'assets': {
-				'main': {'version': 0.1}, # reset, main
+				'main': {'version': 0.2}, # reset, main
 				'ie': {'version': 0.1}, # fixes for internet explorer (grrr...)
 				'print': {'version': 0.1} # proper format for printing
 			}
@@ -130,7 +130,7 @@ config['apptools.project.assets'] = {
 			},
 			
 			'assets': {
-				'app': {'version': 0.1}, # the app's css - layout/main/social/etc
+				'app': {'version': 0.2}, # the app's css - layout/main/social/etc
 			}
 		
 		},
@@ -144,7 +144,7 @@ config['apptools.project.assets'] = {
 			},
 
 			'assets': {
-				'landing': {'version': 0.1},
+				'landing': {'version': 0.2},
 				'topic': {'version': 0.1},
 				'occupier': {'version': 0.1},
 				'movement': {'version': 0.1}

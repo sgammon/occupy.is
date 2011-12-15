@@ -23,18 +23,63 @@ config['apptools.project.services'] = {
 	# Installed API's
 	'services': {
 	
-		## Debug, development, uptime, etc methods for infrastructure/testing/monitoring use
-		'system': {
-			'enabled': True,
-			'service': 'apptools.services.SystemAPIService',
-			'methods': ['echo', 'hello'],
+
+		## Topic API Service
+		'topic': {
+			'enabled': False,
+			'service': 'project.services.topic.TopicService',
+			'methods': ['new', 'get', 'stats', 'list', 'upvote', 'downvote', 'star', 'comment'],
 			
 			'config': {
 				'caching': 'none',
 				'security': 'none',
 				'recording': 'none'
 			}
+
+		},
+
+
+		## Movement API Service
+		'movement': {
+			'enabled': False,
+			'methods': ['new', 'get', 'stats', 'list', 'star', 'comment'],
+		},
+
+
+		## Occupier API Service
+		'occupier': {
+			'enabled': False,
+			'methods': ['new', 'get', 'avatar', 'message'],
+		},
+
+
+		## Search API Service
+		'search': {
+			'enabled': False,
+			'methods': ['autocomplete', 'quicksearch', 'fullsearch'],
+		},
+
+
+		## Social API Service
+		'social': {
+			'enabled': False,
+			'methods': ['notifications', 'alerts'],
+		},
+
+
+		## Authorization/Authentication API Service
+		'auth': {
+			'enabled': False,
+			'methods': ['login', 'logout', 'connect'],
+		},
+
+
+		## Feed API Service
+		'feed': {
+			'enabled': False,
+			'methods': ['main', 'movement', 'topic', 'occupier']
 		}
+
 		
 	} ## End services
 
@@ -58,8 +103,8 @@ config['apptools.services'] = {
 		
 			## Configuration for authentication middleware
 		
-			'enabled': True,
-			'debug': True,
+			'enabled': False,
+			'debug': False,
 			'path': 'apptools.middleware.AuthenticationMiddleware',
 			'args': {
 			
@@ -71,8 +116,8 @@ config['apptools.services'] = {
 		
 			## Configuration for monitoring middleware
 		
-			'enabled': True,
-			'debug': True,
+			'enabled': False,
+			'debug': False,
 			'path': 'apptools.middleware.MonitoringMiddleware',
 			'args': {
 			
@@ -84,8 +129,8 @@ config['apptools.services'] = {
 		
 			## Configuration for authorization middleware
 		
-			'enabled': True,
-			'debug': True,
+			'enabled': False,
+			'debug': False,
 			'path': 'apptools.middleware.AuthorizationMiddleware',
 			'args': {
 			
@@ -97,8 +142,8 @@ config['apptools.services'] = {
 		
 			## Configuration for caching middleware
 		
-			'enabled': True,
-			'debug': True,
+			'enabled': False,
+			'debug': False,
 			'path': 'apptools.middleware.CachingMiddleware',
 			'args': {
 			
@@ -120,7 +165,7 @@ config['apptools.services'] = {
 				'none': {
 					
 					'localize': False,					
-					'default_ttl': None, ## Default Time-to-Live for cached items
+					'default_ttl': 1, ## Default Time-to-Live for cached items
 					
 					'activate': {
 						'local': False, ## Local browser-side caching, if supported

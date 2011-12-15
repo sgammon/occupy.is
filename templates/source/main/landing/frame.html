@@ -7,27 +7,91 @@
 
 
 {% block header %}
-	<header id='topwelcome' class='preview'>
-		<b>header</b>
+	<header id='topwelcome' class='collapsed'>
+		{% include "snippets/pane/header/intro.html" %}
 	</header>
 {% endblock %}
 
 
 {% block content %}
+
+	<!-- Main Title + Post Topic Form -->
 	<div id='welcome'>
-		<h1 id='maintitle'>what is <span class='highlight'>occupy</span> to you?</h1>
-		<br />
+		<h1 id='maintitle'>
+			<span class='droptext'>what is</span>
+			<span class='highlight'>occupy</span>
+			<span class='droptext'>to you?</span>
+
+			<span id='is' class='hidden'>is...</span>	
+		</h1>
+			
+		<form id='poststatus' method='post' action='/' class='visualhidden'>
+			<input id='tellus' class='large statusbox' name='topicbox' placeholder='money in politics' type='search' x-webkit-speech />
+		</form>
+		
+		<div class='clearboth'></div>
+
 	</div>
+
+	<!-- Topic Stream -->
+	<div id='topicstream' class='hidden'>
+
+		<div id='streamcontainer'>
+			
+			{% for i in range(0, 25) %}
+			<div class='streamitem hidden'>
+				<div class='floatleft stream-img'>
+					<div class='profile_img'>
+						<img height="85" width="85" src='http://placehold.it/85x85&text=Occupier' alt='occupier' />
+					</div>
+				</div>
+				<div class='floatleft stream-content'>
+					<div class='title'>
+						<div class='relative snapleft floatleft'><span class='noun'>sam</span> from <span class='noun'>california</span>- 17 minutes ago</div>
+						<div class='close-button absolute inline snapright floatright'><a href='#'>X</a></div>
+						<div class='clearboth'></div>
+					</div>
+
+				</div>
+			</div>
+			{% endfor %}
+
+		</div>
+
+	</div>
+
 {% endblock %}
 
 
 {% block footer %}
-	<footer id='bottomwelcome' class='preview'>
-		<b>footer</b>
+	<footer id='bottomwelcome' class='collapsed'>
+		{% include "snippets/pane/footer/aroundyou.html" %}
 	</footer>
 {% endblock %}
 
-
 {% block page_scripts %}
 <script src="{{ asset.script('landing', 'site') }}"></script>
+{% endblock %}
+
+{% block postsouth %}
+	
+<script>
+	function do_animations()
+	{
+		$('.droptext').animate({opacity: 0}, {duration: 300, complete: function () {
+			
+			$('.droptext').remove();
+			$('#is').css({opacity: 0}).removeClass('hidden').animate({opacity: 1}, 300);
+			$('#poststatus').css({opacity: 0}).removeClass('visualhidden').animate({opacity: 1}, 300);
+			$('#topicstream').css({opacity: 0}).removeClass('hidden').animate({opacity: 1}, 300);
+			$('.streamitem').css({opacity: 0}).removeClass('hidden').animate({opacity: 1}, 300);
+		}});
+	}
+
+	$(document).ready(function ()
+	{
+		setInterval(do_animations, 2550);
+	});
+</script>
+
 {% endblock %}

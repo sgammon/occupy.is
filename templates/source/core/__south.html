@@ -22,3 +22,14 @@
 	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
 	<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
 <![endif]-->
+
+{% if page.services %}
+<script type='text/javascript'>
+	{% from "macros/page_object.js" import render_page_object %}
+	{{ render_page_object(page.services.services_manifest, page.services.config, util, api.users) }}
+
+	{% if page.analytics %}
+		{% include "snippets/google_analytics.js" %}
+	{% endif %}
+</script>
+{% endif %}
