@@ -8,20 +8,20 @@ class SearchService(RemoteService):
 	@remote.method(messages.AutocompleteRequest, messages.AutocompleteResponse)
 	def autocomplete(self, request):
 
-		''' autocomplete partially-entered search terms '''
+		''' Autocompletes partially-entered search terms '''
 
 		pass
 
 	@remote.method(messages.QuicksearchRequest, messages.QuicksearchResponse)
 	def quicksearch(self, request):
 
-		''' quick search lol '''
+		''' Does a quicksearch'''
 
 		pass
 
 	@remote.method(messages.FullsearchRequest, messages.FullsearchResponse)
 	def fullsearch(self, request):
 
-		''' full-text search '''
+		''' Full-text search '''
 
 		pass

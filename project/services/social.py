@@ -8,13 +8,13 @@ class SocialService(RemoteService):
 	@remote.method(messages.NotificationsRequest, messages.NotificationsResponse)
 	def notifications(self, request):
 
-		''' site notification '''
+		''' Handles site notifications '''
 
 		pass
 
 	@remote.method(messages.AlertsRequest, messages.AlertsResponse)
 	def alerts(self, request):
 
-		''' site alerts '''
+		''' Handles site alerts '''
 
 		pass

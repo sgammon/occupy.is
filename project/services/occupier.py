@@ -8,27 +8,27 @@ class OccupierService(RemoteService):
 	@remote.method(messages.NewOccupierRequest, messages.NewOccupierResponse)
 	def new(self, request):
 
-		''' request for new occupier '''
+		''' Creates new Occupier (user) '''
 
 		pass
 
 	@remote.method(messages.GetOccupierRequest, messages.GetOccupierResponse)
 	def get(self, request):
 
-		''' get an occupier entity? '''
+		''' Returns an occupier '''
 
 		pass
 
 	@remote.method(messages.OccupierAvatarRequest, messages.OccupierAvatarResponse)
 	def avatar(self, request):
 
-		''' assign/retrieve avatar for occupier '''
+		''' Returns an occupier's avatar '''
 
 		pass
 
 	@remote.method(messages.MessageOccupierRequest, messages.MessageOccupierResponse)
 	def message(self, request):
 
-		''' message an occupier '''
+		''' Sends a private message to an occupier '''
 
 		pass
