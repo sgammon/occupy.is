@@ -1,9 +1,24 @@
+# -*- coding: utf-8 -*-
+
+############################################################
+## Notifier pipelines - for notifyin' yur userz			  ##
+############################################################
+##														  ##
+## Authors:												  ##
+##		- Alex Rosner (alex@momentum.io)				  ##
+##		- Tyler Porras (tyler@momentum.io)				  ##
+##														  ##
+## History:												  ##
+## 	 - Tyler Porras Tue. Dec. 27.2011 1:04pm	  		  ##
+##		- built XmppSendPipeline, ChannelSendPipeline	  ##
+##														  ##
+############################################################
+
 from project.pipelines import OccupyPipeline
 from google.appengine.api import xmpp
 from google.appengine.ext import db
 from google.appengine.api import channel
 from google.appengine.api import mail
-
 
 
 
@@ -18,7 +33,7 @@ class NotifierPipeline(OccupyPipeline):
 
 
 ### +=+=+=+ EmailNotifier Pipelines +=+=+=+ ###
-class SendEmail(NotifierPipeline):
+class EmailSendPipeline(NotifierPipeline):
 
 	''' A pipeline that can send email. '''
 
@@ -88,9 +103,3 @@ class ChannelSendPipeline(NotifierPipeline):
        
         ## Pushes notification to user
         return send_notification
-
-
-
-
-##Last edit by: Tyler Porras Tue. Dec. 27.2011 1:04pm
-		## - built XmppSendPipeline, ChannelSendPipeline
