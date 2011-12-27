@@ -10,7 +10,7 @@ class Occupier(OccupyModel):
 	## keyname: username (for use in URLs)
 
 	# name + basic ID
-	username = ndb.StringProeprty(indexed=True, required=True)
+	username = ndb.StringProperty(indexed=True, required=True)
 	firstname = ndb.StringProperty(indexed=True, required=True)
 	lastname = ndb.StringProperty(indexed=True, required=False)
 

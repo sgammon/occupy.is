@@ -1,6 +1,11 @@
 from project.pipelines import OccupyPipeline
-
+from google.appengine.api import xmpp
+from google.appengine.ext import db
+from google.appengine.api import channel
 from google.appengine.api import mail
+
+
+
 
 ### +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ ###
 ### 		NotifierPipeline
@@ -13,7 +18,7 @@ class NotifierPipeline(OccupyPipeline):
 
 
 ### +=+=+=+ EmailNotifier Pipelines +=+=+=+ ###
-class SendEmail(EmailNotifier):
+class SendEmail(NotifierPipeline):
 
 	''' A pipeline that can send email. '''
 
@@ -34,17 +39,58 @@ class SendEmail(EmailNotifier):
 
 
 
-class XmppPipeline(NotifierPipeline):
+class XmppSendPipeline(NotifierPipeline):
 
 	''' Hook-in for XMPP notifications. '''
 	
-	def run(self):
-		pass
+	def run(self, *args, **kwargs):
+
+	     try:
+		     ##Using Xmpp to send notification to user
+		     send_to_user = xmpp.send_message(*args, **kwargs)
+
+         ## Raises error if notification cannot send
+		 except Exception, r:
+		 	
+		 	self.log.error('An error was encountered while trying to send an XMPP notification: '+str(r))
+         
+         ## Sends the notification 
+		 return send_to_user
+		 		
 
 
-class ChannelsPipeline(NotifierPipeline):
+class ChannelSendPipeline(NotifierPipeline):
 
 	''' Shell for Channel notifications (live user). '''
 
-	def run(self):
-		pass
+	def run(self, *args, **kwargs):
+		
+		try:
+            ## Using channel to push notifications to user
+            send_notification = channel.send_message(*args, **kwargs)
+           
+       ## Raises error if specified Client ID is malformed
+        except InvalidChannelClientIdError, e:
+
+        	self.log.error('An error was encountered while trying to establish a Channel: '+str(e)),
+        
+        ## Raises error if specified message is malformed       
+        except InvalidMessageError, e:
+
+            self.log.error('An error was encountered while trying to send Channel notification: '+str(eIME))
+
+        finally:
+        	try:
+	        	if send_notification is None or isinstance(send_message, Exception):
+	        		send_notification = False
+	        except NameError, e:
+	        	send_notification = False
+       
+        ## Pushes notification to user
+        return send_notification
+
+
+
+
+##Last edit by: Tyler Porras Tue. Dec. 27.2011 1:04pm
+		## - built XmppSendPipeline, ChannelSendPipeline
