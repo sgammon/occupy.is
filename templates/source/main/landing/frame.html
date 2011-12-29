@@ -71,6 +71,36 @@
 
 {% block page_scripts %}
 <script src="{{ asset.script('landing', 'site') }}"></script>
+<script>
+
+function get_topics(ctx)
+{
+
+	$.apptools.api.topic.list().fulfill({
+	
+		success: function (response)
+		{
+			$.apptools.dev.verbose('TopicPull', 'Successfully pulled topics.', response);
+		},
+
+		failure: function (error)
+		{
+			alert('There was an error pulling topics. Check the console.');
+			$.apptools.dev.error('TopicPull', 'Failed to pull topics.', error);
+		}
+
+	});
+			
+}
+
+$(document).ready(function (){
+	
+	$.apptools.events.register('TOPIC_PULL');
+	$.apptools.events.hook('TOPIC_PULL', get_topics);
+
+});
+
+</script>
 {% endblock %}
 
 {% block postsouth %}

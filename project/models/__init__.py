@@ -2,9 +2,8 @@
 
 ###### ====== Shortcuts ====== ######
 from apptools.model import db, ndb
-from apptools.model import Polymodel
-from apptools.model import Model, NDBModel
-from apptools.model import Expando, NDBExpando
+from apptools.model import NDBModel
+from apptools.model import NDBExpando
 
 ###### ====== Model Mixins ====== ######
 from project.core.data import mixins
@@ -13,7 +12,7 @@ from project.core.data.mixins import UserAuditMixin, CreatedModifiedMixin
 from project.core.data.mixins import MessageConverterMixin, SimpleStructConverterMixin
 
 
-class OccupyModel(NDBModel, CreatedModifiedMixin):
+class OccupyModel(NDBModel, CreatedModifiedMixin, MessageConverterMixin):
 
 	''' Top-level model class for all Occupy schema classes. '''
 

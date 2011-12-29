@@ -8,7 +8,7 @@ import sys
 import bootstrap
 bootstrap.AppBootstrapper.prepareImports()
 
-import ndb
+from google.appengine.ext import ndb
 import config
 import logging
 import webapp2

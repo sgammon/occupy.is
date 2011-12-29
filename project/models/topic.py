@@ -1,4 +1,5 @@
 from project.models import OccupyModel, ndb
+from project.messages.topic import TopicResponse
 
 
 class Topic(OccupyModel):
@@ -7,6 +8,7 @@ class Topic(OccupyModel):
 
 	## parent: none
 	## keyname: shortname
+	_message_class = TopicResponse
 
 	# name/proposal
 	name = ndb.StringProperty(indexed=True)
@@ -16,7 +18,6 @@ class Topic(OccupyModel):
 	# audit
 	posted_by = ndb.KeyProperty(indexed=True)
 	edited_by = ndb.KeyProperty(indexed=True, default=None)
-
 
 
 class Upvote(OccupyModel):
@@ -29,6 +30,7 @@ class Upvote(OccupyModel):
 	occupier = ndb.KeyProperty(indexed=True)
 	topic = ndb.KeyProperty(indexed=True)
 
+	
 
 class Downvote(OccupyModel):
 
@@ -38,4 +40,4 @@ class Downvote(OccupyModel):
 	## keyname: str(key(occupier))
 
 	occupier = ndb.KeyProperty(indexed=True)
-	downvote = ndb.KeyProperty(indexed=True)
+	topic = ndb.KeyProperty(indexed=True)

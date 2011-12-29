@@ -1,24 +1,29 @@
 from protorpc import messages
 
 
+class TopicResponse(messages.Message):
+
+	key = messages.StringField(1)
+	name = messages.StringField(2)
+	shortname = messages.StringField(3)
+	manifesto = messages.StringField(4)
+	posted_by = messages.StringField(5)
+	edited_by = messages.StringField(6)
+
+
 class NewTopicRequest(messages.Message):
 
-	pass
-
-
-class NewTopicResponse(messages.Message):
-
-	pass
+	name = messages.StringField(1)
+	shortname = messages.StringField(2)
+	manifesto = messages.StringField(3)
+	posted_by = messages.StringField(4)
+	edited_by = messages.StringField(5)
 
 
 class GetTopicRequest(messages.Message):
 
-	pass
-
-
-class GetTopicResponse(messages.Message):
-
-	pass
+	key = messages.StringField(1)
+	shortname = messages.StringField(2)
 
 
 class TopicStatsRequest(messages.Message):
@@ -38,8 +43,8 @@ class ListTopicRequest(messages.Message):
 
 class ListTopicResponse(messages.Message):
 
-	pass
-
+	topics = messages.MessageField(TopicResponse, 1, repeated=True)
+	
 
 class UpvoteTopicRequest(messages.Message):
 

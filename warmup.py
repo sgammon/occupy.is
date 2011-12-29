@@ -11,7 +11,7 @@ import bootstrap
 bootstrap.AppBootstrap.prepareImports()
 
 ## Libraries
-import ndb
+import google.appengine.ext.ndb
 import webob
 import jinja2
 import config
