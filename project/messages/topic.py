@@ -44,45 +44,31 @@ class ListTopicRequest(messages.Message):
 class ListTopicResponse(messages.Message):
 
 	topics = messages.MessageField(TopicResponse, 1, repeated=True)
-	
-
-class UpvoteTopicRequest(messages.Message):
-
-	pass
 
 
-class UpvoteTopicResponse(messages.Message):
+class TopicVoteRequest(messages.Message):
 
-	pass
-
-
-class DownvoteTopicRequest(messages.Message):
-
-	pass
+	occupier = messages.StringField(1)
+	topic = messages.StringField(2)
 
 
-class DownvoteTopicResponse(messages.Message):
+class TopicVoteResponse(messages.Message):
 
-	pass
+	key = messages.StringField(1)
 
 
-class StarTopicRequest(messages.Message):
+class TopicSocialRequest(messages.Message):
 
-	pass
+	occupier = messages.StringField(1)
+	subject = messages.StringField(2)
 
 
 class StarTopicResponse(messages.Message):
 
-	pass
-
-
-class CommentTopicRequest(messages.Message):
-
-	pass
+	key = messages.StringField(1)
 
 
 class CommentTopicResponse(messages.Message):
 
-	pass
-
-	
+	key = messages.StringField(1)
+	created = messages.StringField(2)	

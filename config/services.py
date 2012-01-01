@@ -41,7 +41,7 @@ config['apptools.project.services'] = {
 
 		## Movement API Service
 		'movement': {
-			'enabled': False,
+			'enabled': True,
 			'service': 'project.services.movement.MovementService',
 			'methods': ['new', 'get', 'stats', 'list', 'star', 'comment'],
 

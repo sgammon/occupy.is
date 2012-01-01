@@ -9,6 +9,8 @@ class Occupier(OccupyModel):
 	## parent: none
 	## keyname: username (for use in URLs)
 
+	_message_class = OccupierResponse
+
 	# name + basic ID
 	username = ndb.StringProperty(indexed=True, required=True)
 	firstname = ndb.StringProperty(indexed=True, required=True)
@@ -23,6 +25,21 @@ class Occupier(OccupyModel):
 	# fun profile stuff
 	aboutme = ndb.TextProperty()
 	manifesto = ndb.TextProperty()
+
+	def to_message(self, include=None, exclude=None):
+		
+		response = self._message_class()
+
+		if self.key is not None:
+			response.key = self.key.urlsafe()
+		else:
+			response.key = None
+
+		for k, v in self.to_dict(include=include, exclude=exclude).items():
+			if hasattr(response, k):
+				setattr(response, k, str(v))
+
+		return response
 
 
 class OccupierAccount(OccupyModel):

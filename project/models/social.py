@@ -1,6 +1,5 @@
 from project.models import OccupyModel, ndb
 
-
 class Star(OccupyModel):
 
 	''' Marker for a Star placed on a Topic, Movement, Occupier, Comment or Trend. '''
