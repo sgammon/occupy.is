@@ -1,4 +1,23 @@
+# -*- coding: utf-8 -*-
+
+############################################################
+## Analyzer pipelines - for analyzin' yur data			  ##
+############################################################
+##                                                        ##
+## Authors:                                               ##
+##		- Alex Rosner (alex@momentum.io)                  ##
+##		- Tyler Porras (tyler@momentum.io)                ##
+##                                                        ##
+## History:                                               ##
+## 	 - Tyler Porras Sat. Dec. 31. 2011 4:10pm             ##
+##		- built ContentAction child pipeline shells       ##
+##   - Tyler Porras Mon. Jan. 2. 2012 5:36 pm             ##
+##      - Commit changes                                  ##                 
+############################################################
 from project.pipelines import OccupyPipeline
+from google.appengine.ext import db
+import random
+
 
 
 class AnalyzerPipeline(OccupyPipeline):
@@ -7,6 +26,7 @@ class AnalyzerPipeline(OccupyPipeline):
 	
 	def run(self):
 		pass
+
 
 
 #### +=+=+=+ Analyzer Pipelines +=+=+=+ ####
@@ -28,6 +48,7 @@ class ContentActionPipeline(AnalyzerPipeline):
 
 
 
+#### +=+=+=+  Counter Pipelines  +=+=+=+ ####
 class TopicCounter(ContentActionPipeline):
 
 	''' Pipeline used for counting topics '''
@@ -59,9 +80,9 @@ class VoteCounter(ContentActionPipeline):
 
     ''' Pipeline for up/down votes on topics AND comments, per topic and comment. '''
 
-	def run(self):
-		pass
-
+	def run(self, *args):
+		
+		
 
 
 
