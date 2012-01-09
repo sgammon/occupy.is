@@ -34,11 +34,7 @@ import random
 
 class AnalyzerPipeline(OccupyPipeline):
 	
-<<<<<<< HEAD
 	''' Base for analyzer pipelines. '''
-=======
-	''' base for analyzer pipelines '''
->>>>>>> aabc470c037a3e83a478edd89f5a714db31ef928
 	
 
 	def getCountForParent(self, query, stack=0):
@@ -94,7 +90,7 @@ class TopicCounter(ContentActionPipeline):
         topics = [Topic]
 
         for topic in topics:
-        	topic_queries.append((topic, topic.query(ancestor=parent, options=query_options)))
+        	topic_queries.append(topic, topic.query(ancestor=parent, options=query_options))
         
         results = {}
         for topic, query in query_options:
@@ -124,7 +120,7 @@ class CommentCounter(ContentActionPipeline):
 		comments = [Comment]
 
         for comment in comments:
-        	comment_queries.append((comment, comment.query(ancestor=parent, options=query_options)))
+        	comment_queries.append(comment, comment.query(ancestor=parent, options=query_options))
 
         results = {}
         for comment, query in query_options:
@@ -153,7 +149,7 @@ class StarCounter(SocialActionPipeline):
 		stars = [Star]
 
 		for star in stars:
-			star_queries.append((star, star.query(ancestor=parent, options=query_options)))
+			star_queries.append(star, star.query(ancestor=parent, options=query_options))
 		
 		results = {}
 		for star, query in query_options:
@@ -183,7 +179,7 @@ class VoteCounter(SocialActionPipeline):
 		vote_types = [Upvote, Downvote]
 		
 		for vote_type in vote_types:
-			vote_queries.append((vote_type, vote_type.query(ancestor=parent, options=query_options)))
+			vote_queries.append(vote_type, vote_type.query(ancestor=parent, options=query_options))
 
 		results = {}
 		for vote_type, query in vote_queries:
