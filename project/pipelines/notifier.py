@@ -68,7 +68,7 @@ class XmppSendPipeline(NotifierPipeline):
 		 except Exception, e:
 		 	
 		 	self.log.error('An error was encountered while trying to send an XMPP notification: '+str(e))
-         
+           
          ## Sends the notification 
 		 return send_to_user
 		 		
