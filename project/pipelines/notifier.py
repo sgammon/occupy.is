@@ -55,7 +55,7 @@ class EmailSendPipeline(NotifierPipeline):
 
 
 class XmppSendPipeline(NotifierPipeline):
-
+  
 	''' Hook-in for XMPP notifications. '''
 	
 	def run(self, *args, **kwargs):
