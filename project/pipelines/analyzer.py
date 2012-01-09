@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
 
 ############################################################
-## Analyzer pipelines - for analyzin' yur data			  ##
+## Analyzer pipelines - for analyzin' yur data            ##
 ############################################################
 ##                                                        ##
 ## Authors:                                               ##
-##		- Alex Rosner (alex@momentum.io)                  ##
-##		- Tyler Porras (tyler@momentum.io)                ##
+##		- Alex Rosner (alex@momentum.io)          ##
+##		- Tyler Porras (tyler@momentum.io)        ##
 ##                                                        ##
 ## History:                                               ##
-## 	 - Tyler Porras Sat. Dec. 31. 2011 4:10pm             ##
-##		- built ContentAction child pipeline shells       ##
+##   - Tyler Porras Sat. Dec. 31. 2011 4:10pm             ##
+##	- built ContentAction child pipeline shells       ##
 ##   - Tyler Porras Mon. Jan. 2. 2012 5:36 pm             ##
 ##      - Commit changes                                  ## 
 ##   -Tyler Porras/ Sam Gammon Sun. Jan. 8 2012           ##
 ##      - built VoteCounter                               ##
 ##   -Tyler Porras Mon. Jan. 9. 2012 10:26 am             ##
 ##      - built Topic/Comment/Star counters               ##
-##                                                        ##
 ##   -Tyler Porras Mon. Jan. 9. 2012 1:26 pm              ##
 ##      - edited pipelines                                ##              
 ############################################################
@@ -35,7 +34,11 @@ import random
 
 class AnalyzerPipeline(OccupyPipeline):
 	
+<<<<<<< HEAD
 	''' Base for analyzer pipelines. '''
+=======
+	''' base for analyzer pipelines '''
+>>>>>>> aabc470c037a3e83a478edd89f5a714db31ef928
 	
 
 	def getCountForParent(self, query, stack=0):
