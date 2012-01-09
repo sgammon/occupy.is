@@ -3,15 +3,15 @@
 ############################################################
 ## Notifier pipelines - for notifyin' yur userz           ##
 ############################################################
-##							  ##
-## Authors:						  ##
-##		- Alex Rosner (alex@momentum.io)	  ##
-##		- Tyler Porras (tyler@momentum.io)	  ##
-##							  ##
-## History:						  ##
-##  - Tyler Porras Tue. Dec. 27.2011 1:04pm	          ##
-##	- built XmppSendPipeline, ChannelSendPipeline	  ##
-##							  ##
+##                                                        ##
+## Authors:                                               ##
+##		- Alex Rosner (alex@momentum.io)                  ##
+##		- Tyler Porras (tyler@momentum.io)                ##
+##                                                        ##
+## History:                                               ##
+##  - Tyler Porras Tue. Dec. 27.2011 1:04pm               ##
+##	- built XmppSendPipeline, ChannelSendPipeline         ##
+##                                                        ##
 ############################################################
 
 from project.pipelines import OccupyPipeline
@@ -65,9 +65,9 @@ class XmppSendPipeline(NotifierPipeline):
 		     send_to_user = xmpp.send_message(*args, **kwargs)
 
          ## Raises error if notification cannot send
-		 except Exception, r:
+		 except Exception, e:
 		 	
-		 	self.log.error('An error was encountered while trying to send an XMPP notification: '+str(r))
+		 	self.log.error('An error was encountered while trying to send an XMPP notification: '+str(e))
          
          ## Sends the notification 
 		 return send_to_user
@@ -87,12 +87,12 @@ class ChannelSendPipeline(NotifierPipeline):
        ## Raises error if specified Client ID is malformed
         except InvalidChannelClientIdError, e:
 
-        	self.log.error('An error was encountered while trying to establish a Channel: '+str(e)),
+        	self.log.error('An error was encountered while trying to establish a Channel: '+str(e))
         
         ## Raises error if specified message is malformed       
         except InvalidMessageError, e:
 
-            self.log.error('An error was encountered while trying to send Channel notification: '+str(eIME))
+            self.log.error('An error was encountered while trying to send Channel notification: '+str(e))
 
         finally:
         	try:
