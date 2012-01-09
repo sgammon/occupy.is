@@ -17,7 +17,9 @@
 ##      - built VoteCounter                               ##
 ##   -Tyler Porras Mon. Jan. 9. 2012 10:26 am             ##
 ##      - built Topic/Comment/Star counters               ##
-##                                                        ##               
+##                                                        ##
+##   -Tyler Porras Mon. Jan. 9. 2012 1:26 pm              ##
+##      - edited pipelines                                ##              
 ############################################################
 from project.pipelines import OccupyPipeline
 from project.models import ndb
@@ -75,13 +77,13 @@ class TopicCounter(ContentActionPipeline):
 
 	''' Pipeline used for counting topics '''
 
-	def run(self, parent_key):
+	def run(self, parent_key=parent_key):
 		
 		try:
-			parent = nndb.key.Key(urlsafe=str(parent_key)) # parent should be a Movement, Profile Page, etc
-            parent_e = pparent.get()
+			parent_k = nndb.key.Key(urlsafe=str(parent_key)) # parent should be a Movement, Profile Page, etc
+            parent = parent_k.get()
         except Exception, e:
-        	#invalid parent key
+        	self.log.error('Invalid parent key: '+str(e))
         	raise
         	return False
         
@@ -89,7 +91,7 @@ class TopicCounter(ContentActionPipeline):
         topics = [Topic]
 
         for topic in topics:
-        	topic_queries.append((topic, topic.query(ancestor=parent, options=query.options)))
+        	topic_queries.append((topic, topic.query(ancestor=parent, options=query_options)))
         
         results = {}
         for topic, query in query_options:
@@ -104,13 +106,14 @@ class CommentCounter(ContentActionPipeline):
 
 	''' Pipeline used for counting posted comments per topic. '''
 
-	def run(self,parent_key):
+	def run(self,parent_key=parent_key):
 
 		try: 
-		    parent = nndb.key.Key(urlsafe=str(parent_key)) # should be a topic
-		    parent_e = parent.get()
-		except Exception, e:
-			#invalid parent key
+		    parent_k = nndb.key.Key(urlsafe=str(parent_key)) # should be a topic
+		    parent = parent_k.get()
+		
+	    except Exception, e:
+			self.log.error('Invalid parent key: '+str(e))
 			raise
 			return False
 		
@@ -133,13 +136,13 @@ class StarCounter(SocialActionPipeline):
 
     ''' Pipeline used for counting stars on comments and topics. '''
     		
-    def run(self, parent_key):
+    def run(self, parent_key=parent_key):
         
         try:
-			parent = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
-			parent_e = parent.get()
+			parent_k = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
+			parent = parent_k.get()
 		except Exception, e:
-			# invalid parent key
+			self.log.error('Invalid parent key: '+str(e))
 			raise
 			return False 
 
@@ -169,7 +172,7 @@ class VoteCounter(SocialActionPipeline):
 			parent = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
 			parent_e = parent.get()
 		except Exception, e:
-			# invalid parent key
+			self.log.error('Invalid parent key: '+str(e))
 			raise
 			return False
 		
