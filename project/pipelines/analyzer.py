@@ -35,7 +35,7 @@ import random
 
 class AnalyzerPipeline(OccupyPipeline):
 	
-	''' Empty shell for analyzer pipeline. '''
+	''' Base for analyzer pipelines. '''
 	
 
 	def getCountForParent(self, query, stack=0):
@@ -56,7 +56,7 @@ class AnalyzerPipeline(OccupyPipeline):
 #### +=+=+=+ Analyzer Pipelines +=+=+=+ ####
 class SocialActionPipeline(AnalyzerPipeline):
 	
-	''' Pipeline for social action (upvote, downvote, like, etc.). '''
+	''' Pipeline for social action (upvote, downvote, star, etc.) '''
 	
 	def run(self):
 		pass
@@ -65,7 +65,7 @@ class SocialActionPipeline(AnalyzerPipeline):
 
 class ContentActionPipeline(AnalyzerPipeline):
 	
-	''' Pipeline for created content like comments, messages, pictures etc. '''
+	''' Pipeline for created content like comments, messages, pictures, etc. '''
 
 	def run(self):
 		pass
@@ -166,11 +166,11 @@ class VoteCounter(SocialActionPipeline):
     ''' Pipeline for up/down votes on topics AND comments, per topic and comment. '''
 
 
-	def run(self, parent_key):
+	def run(self, parent_key=parent_key):
 
 		try:
-			parent = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
-			parent_e = parent.get()
+			parent_k = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
+			parent = parent_k.get()
 		except Exception, e:
 			self.log.error('Invalid parent key: '+str(e))
 			raise
@@ -183,7 +183,7 @@ class VoteCounter(SocialActionPipeline):
 			vote_queries.append((vote_type, vote_type.query(ancestor=parent, options=query_options)))
 
 		results = {}
-		for vote_type, query in query_options:
+		for vote_type, query in vote_queries:
 			results[vote_type] = self.getCountForParent(query)
 
 		return dict([k.kind(), v for k, v in results.items()])
