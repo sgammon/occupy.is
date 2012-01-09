@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 60
-/svn/!svn/ver/210/trunk/python/src/mapreduce/lib/pipeline/ui
+/svn/!svn/ver/257/trunk/python/src/mapreduce/lib/pipeline/ui
 END
 jquery.treeview.css
 K 25
@@ -55,7 +55,7 @@ status.css
 K 25
 svn:wc:ra_dav:version-url
 V 71
-/svn/!svn/ver/171/trunk/python/src/mapreduce/lib/pipeline/ui/status.css
+/svn/!svn/ver/253/trunk/python/src/mapreduce/lib/pipeline/ui/status.css
 END
 jquery-1.4.2.min.js
 K 25
@@ -67,7 +67,7 @@ status.js
 K 25
 svn:wc:ra_dav:version-url
 V 70
-/svn/!svn/ver/210/trunk/python/src/mapreduce/lib/pipeline/ui/status.js
+/svn/!svn/ver/257/trunk/python/src/mapreduce/lib/pipeline/ui/status.js
 END
 jquery.timeago.js
 K 25

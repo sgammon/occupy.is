@@ -1156,10 +1156,18 @@
   })();
   CoreUserAPI = (function() {
     __extends(CoreUserAPI, CoreAPI);
-    function CoreUserAPI(apptools) {}
-    CoreUserAPI.prototype.setUserInfo = function() {
-      return console.log('USERINFO: ', arguments);
-    };
+    function CoreUserAPI(apptools) {
+      this.current_user = {};
+      ({
+        this.setUserInfo: function(userinfo) {
+          $.apptools.dev.log('UserAPI', 'Setting server-injected userinfo.', userinfo);
+          this.current_user.username = userinfo.current_user;
+          this.current_user.is_user_admin = userinfo.is_user_admin;
+          this.current_user.login_url = userinfo.login_url;
+          return this.current_user.logout_url = userinfo.logout_url;
+        }
+      });
+    }
     return CoreUserAPI;
   })();
   AppTools = (function() {

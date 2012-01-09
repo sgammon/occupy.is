@@ -1,4 +1,5 @@
 from project.models import OccupyModel, ndb
+from project.messages.topic import TopicResponse, TopicVoteResponse
 
 
 class Topic(OccupyModel):
@@ -7,6 +8,7 @@ class Topic(OccupyModel):
 
 	## parent: none
 	## keyname: shortname
+	_message_class = TopicResponse
 
 	# name/proposal
 	name = ndb.StringProperty(indexed=True)
@@ -19,23 +21,47 @@ class Topic(OccupyModel):
 
 
 
-class Upvote(OccupyModel):
+class Vote(OccupyModel):
+
+	''' The base model for a topic up- or downvote '''
+
+	_message_class = TopicVoteResponse
+
+	occupier = ndb.KeyProperty(indexed=True)
+	topic = ndb.KeyProperty(indexed=True)
+
+	def to_message(self, include=None, exclude=None):
+		
+		response = self._message_class()
+
+		if self.key is not None:
+			response.key = self.key.urlsafe()
+		else:
+			response.key = None
+
+		for k, v in self.to_dict(include=include, exclude=exclude).items():
+			if hasattr(response, k):
+				setattr(response, k, v.urlsafe())
+
+		return response
+
+
+
+class Upvote(Vote):
 
 	''' An upvote on a topic, indicating approval, placed by an unregistered or registered user of Occupy. '''
 
 	## parent: topic
 	## keyname: str(key(occupier))
 
-	occupier = ndb.KeyProperty(indexed=True)
-	topic = ndb.KeyProperty(indexed=True)
+	pass
 
 
-class Downvote(OccupyModel):
+class Downvote(Vote):
 
 	''' A downvote on a topic, indicating disapproval, placed by an unregistered or registered user of Occupy. '''
 
 	## parent: topic
 	## keyname: str(key(occupier))
 
-	occupier = ndb.KeyProperty(indexed=True)
-	downvote = ndb.KeyProperty(indexed=True)
+	pass

@@ -1,23 +1,42 @@
+import logging
+
 ## occupier API service
 from project.services import RemoteService, remote
 from project.messages import occupier as messages
 
+from project.models import ndb, occupier
+from google.appengine.ext import ndb as nndb
+
 
 class OccupierService(RemoteService):
 
-	@remote.method(messages.NewOccupierRequest, messages.NewOccupierResponse)
+	@remote.method(messages.NewOccupierRequest, messages.OccupierResponse)
 	def new(self, request):
 
 		''' Creates new Occupier (user) '''
 
-		pass
+		o = Occupier.from_message(request, key=nndb.key.Key(Occupier, request.username))
+		
+		o_key = o.put()
 
-	@remote.method(messages.GetOccupierRequest, messages.GetOccupierResponse)
+		response_obj = o.to_message()
+		response_obj.key = o_key.urlsafe()
+		return response_obj
+
+	@remote.method(messages.GetOccupierRequest, messages.OccupierResponse)
 	def get(self, request):
 
 		''' Returns an occupier '''
 
-		pass
+		if request.key is None:
+			o_key= nndb.key.Key(Occupier, request.username)
+		
+		elif request.username is None:
+			o_key = Occupier.Key(urlsafe=request.key)
+		
+		o = o_key.get()
+
+		return o.to_message()
 
 	@remote.method(messages.OccupierAvatarRequest, messages.OccupierAvatarResponse)
 	def avatar(self, request):

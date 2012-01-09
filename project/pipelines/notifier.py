@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
 ############################################################
-## Notifier pipelines - for notifyin' yur userz			  ##
+## Notifier pipelines - for notifyin' yur userz           ##
 ############################################################
-##														  ##
-## Authors:												  ##
-##		- Alex Rosner (alex@momentum.io)				  ##
-##		- Tyler Porras (tyler@momentum.io)				  ##
-##														  ##
-## History:												  ##
-## 	 - Tyler Porras Tue. Dec. 27.2011 1:04pm	  		  ##
-##		- built XmppSendPipeline, ChannelSendPipeline	  ##
-##														  ##
+##							  ##
+## Authors:						  ##
+##		- Alex Rosner (alex@momentum.io)	  ##
+##		- Tyler Porras (tyler@momentum.io)	  ##
+##							  ##
+## History:						  ##
+##  - Tyler Porras Tue. Dec. 27.2011 1:04pm	          ##
+##	- built XmppSendPipeline, ChannelSendPipeline	  ##
+##							  ##
 ############################################################
 
 from project.pipelines import OccupyPipeline

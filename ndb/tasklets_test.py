@@ -11,6 +11,7 @@ from . import eventloop
 from . import model
 from . import test_utils
 from . import tasklets
+from . import utils
 
 
 class TaskletTests(test_utils.NDBTest):
@@ -27,6 +28,20 @@ class TaskletTests(test_utils.NDBTest):
   def universal_callback(self, *args):
     self.log.append(args)
 
+  def testAddFlowException(self):
+    try:
+      self.assertRaises(TypeError, tasklets.add_flow_exception, 'abc')
+      self.assertRaises(TypeError, tasklets.add_flow_exception, str)
+      tasklets.add_flow_exception(ZeroDivisionError)
+      self.assertTrue(ZeroDivisionError in tasklets._flow_exceptions)
+      @tasklets.tasklet
+      def foo():
+        1/0
+        yield
+      self.assertRaises(ZeroDivisionError, foo().get_result)
+    finally:
+      tasklets._init_flow_exceptions()
+
   def testFuture_Constructor(self):
     f = tasklets.Future()
     self.assertEqual(f._result, None)
@@ -35,8 +50,8 @@ class TaskletTests(test_utils.NDBTest):
 
   def testFuture_Repr(self):
     f = tasklets.Future()
-    prefix = (r'<Future [\da-f]+ created by '
-              r'(testFuture_Repr\(tasklets_test.py:\d+\)|\?) ')
+    prefix = (r'<Future [\da-f]+ created by'
+              r'( testFuture_Repr\(tasklets_test.py:\d+\)|\?); ')
     self.assertTrue(re.match(prefix + r'pending>$', repr(f)), repr(f))
     f.set_result('abc')
     self.assertTrue(re.match(prefix + r'result \'abc\'>$', repr(f)), repr(f))
@@ -45,6 +60,27 @@ class TaskletTests(test_utils.NDBTest):
     self.assertTrue(re.match(prefix + r'exception RuntimeError: abc>$',
                              repr(f)),
                     repr(f))
+
+  def testFuture_Repr_TaskletWrapper(self):
+    prefix = r'<Future [\da-f]+ created by '
+    @tasklets.tasklet
+    @utils.positional(1)
+    def foo():
+      f1 = tasklets.Future()
+      self.assertTrue(re.match(prefix +
+                               r'foo\(tasklets_test.py:\d+\); pending>$',
+                               repr(f1)),
+                      repr(f1))
+      f1.set_result(None)
+      yield f1
+    f2 = foo()
+    self.assertTrue(
+      re.match(prefix +
+               r'testFuture_Repr_TaskletWrapper\(tasklets_test.py:\d+\) '
+               r'for tasklet foo\(tasklets_test.py:\d+\).*; pending>$',
+               repr(f2)),
+      repr(f2))
+    f2.check_success()
 
   def testFuture_Done_State(self):
     f = tasklets.Future()
@@ -121,10 +157,8 @@ class TaskletTests(test_utils.NDBTest):
     self.assertEqual(self.log, [(f,) for f in self.futs])
 
   def testSleep(self):
-    """Ensure that tasklets sleep for the specified amount of time.
-
-    NOTE: May sleep too long if processor usage is high.
-    """
+    # Ensure that tasklets sleep for the specified amount of time.
+    # NOTE: May sleep too long if processor usage is high.
     log = []
     @tasklets.tasklet
     def foo():
@@ -542,6 +576,7 @@ class TaskletTests(test_utils.NDBTest):
     self.assertEqual(y, 5)
 
   def testTasklets_Raising(self):
+    self.ExpectWarnings()
     @tasklets.tasklet
     def t1():
       f = t2(True)
@@ -602,6 +637,7 @@ class TaskletTests(test_utils.NDBTest):
     foo().check_success()
 
   def testTasklet_YieldTupleTypeError(self):
+    self.ExpectWarnings()
     @tasklets.tasklet
     def good():
       yield tasklets.sleep(0)
@@ -639,10 +675,11 @@ class TaskletTests(test_utils.NDBTest):
 
     foo().get_result()
 
-class TracebackTests(unittest.TestCase):
+class TracebackTests(test_utils.NDBTest):
   """Checks that errors result in reasonable tracebacks."""
 
   def testBasicError(self):
+    self.ExpectWarnings()
     frames = [sys._getframe()]
     @tasklets.tasklet
     def level3():

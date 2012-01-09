@@ -26,7 +26,7 @@ config['apptools.project.services'] = {
 
 		## Topic API Service
 		'topic': {
-			'enabled': False,
+			'enabled': True,
 			'service': 'project.services.topic.TopicService',
 			'methods': ['new', 'get', 'stats', 'list', 'upvote', 'downvote', 'star', 'comment'],
 			
@@ -41,7 +41,7 @@ config['apptools.project.services'] = {
 
 		## Movement API Service
 		'movement': {
-			'enabled': False,
+			'enabled': True,
 			'service': 'project.services.movement.MovementService',
 			'methods': ['new', 'get', 'stats', 'list', 'star', 'comment'],
 

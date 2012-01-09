@@ -1,0 +1,3 @@
+[submodule "lib/apptools"]
+	path = lib/apptools
+	url = git://github.com/sgammon/apptools.git

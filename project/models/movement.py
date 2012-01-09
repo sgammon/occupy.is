@@ -1,4 +1,5 @@
 from project.models import OccupyModel, ndb
+from project.messages.movement import MovementResponse
 
 
 ## abstract levels at which a 'movement' entity can exist
@@ -11,14 +12,15 @@ class Movement(OccupyModel):
 
 	## parent: none
 	## keyname: short name (for use in URLs/subdomains)
+	_message_class = MovementResponse
 
 	# naming
 	name = ndb.StringProperty(required=True)
 	shortname = ndb.StringProperty(required=True)
 
 	# geo data
-	bounds = ndb.GeoPointProperty(repeated=True)
-	epicenter = ndb.GeoPointProperty()
+	bounds = ndb.GeoPtProperty(repeated=True)
+	epicenter = ndb.GeoPtProperty()
 
 	# web/social links
 	website = ndb.StringProperty()

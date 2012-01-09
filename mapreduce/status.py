@@ -30,7 +30,6 @@ from google.appengine.ext import db
 from mapreduce import base_handler
 from mapreduce import errors
 from mapreduce import model
-from google.appengine.ext.webapp import template
 
 
 # TODO(user): a list of features we'd like to have in status page:
@@ -357,7 +356,7 @@ class GetJobDetailHandler(base_handler.GetJsonHandler):
     })
     self.json_response["result_status"] = job.result_status
 
-    shards_list = model.ShardState.find_by_mapreduce_id(mapreduce_id)
+    shards_list = model.ShardState.find_by_mapreduce_state(job)
     all_shards = []
     shards_list.sort(key=lambda x: x.shard_number)
     for shard in shards_list:
