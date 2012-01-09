@@ -34,7 +34,7 @@ import random
 
 class AnalyzerPipeline(OccupyPipeline):
 	
-	''' Empty shell for analyzer pipeline. '''
+	''' base for analyzer pipelines '''
 	
 
 	def getCountForParent(self, query, stack=0):
