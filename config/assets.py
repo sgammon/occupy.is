@@ -28,7 +28,7 @@ config['apptools.project.assets'] = {
 			
 			'assets': {
 				'backbone': {'min': True, 'version': '0.5.1'}, # Backbone.JS - site MVC core
-				'amplify': {'min': True, 'version': '1.0.0'}, # AmplifyJS - for request, local storage + pubsub management
+				'amplify': {'min': True, 'version': '1.1.0'}, # AmplifyJS - for request, local storage + pubsub management
 				'modernizr': {'min': True, 'version': '2.0'}, # Modernizr - browser polyfill + compatibility testing
 				'lawnchair': {'version': '0.6.3'}, # Lawnchair: Client-side persistent storage
 				'underscore': {'min': True, 'version': '1.2.3'} # Underscore: the functional side of javascript
@@ -76,6 +76,7 @@ config['apptools.project.assets'] = {
 			'assets': {
 				'jquery.fancybox': {'name': 'fancybox', 'min': True, 'version': '1.3.4'}, # Fancybox plugin for lightbox dialogues
 				'jquery.tipsy': {'name': 'tipsy', 'min': True, 'version': '1.0.0a'} # Tipsy tooltips
+				'jquery.leanmodal': {'name': 'leanmodal', 'min': True, 'version': 1.0} # leanModal plugin for modal dialogues
 			}
 		}
 		
