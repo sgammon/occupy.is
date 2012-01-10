@@ -29,3 +29,19 @@ class Movement(OccupyModel):
 	# where this movement fits in
 	ancestry = ndb.KeyProperty(repeated=True)
 	scope = ndb.StringProperty(choices=MOVEMENT_SCOPES, required=True)
+
+	@classmethod
+	def from_message(cls, message, key=None, **kwargs):
+
+		if hasattr('epicenter', message):
+			epicenter = request.epicenter
+			request.epicenter = None
+		
+		if hasattr('bounds', message):
+			bounds = request.bounds
+			request.bounds = []
+		
+		new_movement = super(Movement, cls).from_message(message, key, **kwargs)
+		new_movement.epicenter = epicenter
+		new_movement.bounds = bounds
+		return new_movement

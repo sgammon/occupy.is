@@ -31,11 +31,11 @@ class MovementService(RemoteService):
 
 		''' Returns a movement '''
 
-		if request.key is None:
-			m_key = nndb.key.Key(Movement, request.shortname)
-		
-		elif request.shortname is None:
+		if request.key is not None:
 			m_key = Movement.Key(urlsafe=request.key)
+
+		else:
+			m_key = nndb.key.Key(Movement, request.shortname)
 		
 		m = m_key.get()
 

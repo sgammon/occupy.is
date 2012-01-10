@@ -28,11 +28,11 @@ class OccupierService(RemoteService):
 
 		''' Returns an occupier '''
 
-		if request.key is None:
-			o_key= nndb.key.Key(Occupier, request.username)
-		
-		elif request.username is None:
+		if request.key is not None:
 			o_key = Occupier.Key(urlsafe=request.key)
+		
+		else:
+			o_key= nndb.key.Key(Occupier, request.username)
 		
 		o = o_key.get()
 

@@ -5,6 +5,7 @@ from project.services import RemoteService, remote
 from project.messages import topic as messages
 
 from project.models import ndb, topic
+from project.models.occupier import Occupier
 from project.models.social import Star, Comment
 from google.appengine.ext import ndb as nndb
 
@@ -16,7 +17,7 @@ class TopicService(RemoteService):
 
 		''' Creates new topic '''
 
-		t = Topic.from_message(request, key=nndb.key.Key(Topic, request.shortname))
+		t = Topic.from_message(request, key=nndb.key.Key(Topic, request.shortname), posted_by=nndb.key.Key(Occupier, request.posted_by))
 		
 		t_key = t.put()
 
@@ -29,11 +30,11 @@ class TopicService(RemoteService):
 
 		''' Returns a topic '''
 
-		if request.key is None:
-			t_key= nndb.key.Key(Topic, request.shortname)
-		
-		elif request.shortname is None:
+		if request.key is not None:
 			t_key = Topic.Key(urlsafe=request.key)
+		
+		else:
+			t_key= nndb.key.Key(Topic, request.shortname)
 		
 		t = t_key.get()
 

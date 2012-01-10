@@ -40,6 +40,17 @@ class Occupier(OccupyModel):
 				setattr(response, k, str(v))
 
 		return response
+	
+	@classmethod
+	def from_message(cls, message, key=None, **kwargs):
+
+		if hasattr('dob', message):
+			dob = request.dob
+			request.dob = None
+		
+		new_occupier = super(Occupier, cls).from_message(message, key, **kwargs)
+		new_occupier.dob = dob
+		return new_occupier
 
 
 class OccupierAccount(OccupyModel):

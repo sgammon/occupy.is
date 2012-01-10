@@ -51,7 +51,7 @@ config['apptools.project.assets'] = {
 		},
 		
 		### jQuery Core & Plugins ###
-		('jquery', 'core'): { 
+		('jquery', 'jquery'): { 
 		
 			'config': {
 				'version_mode': 'getvar',				
@@ -60,11 +60,24 @@ config['apptools.project.assets'] = {
 			
 			'assets': {
 				'core': {'name': 'jquery', 'min': True, 'version': '1.6.1'}, # jQuery Core
-				'easing': {'path': 'interaction/easing.min.js'}, # Easing transitions for smoother animations
-				'mousewheel': {'path': 'interaction/mousewheel.min.js'} # jQuery plugin for mousewheel events + interactions
+				'easing': {'path': 'ui/jquery.easing.min.js'}, # Easing transitions for smoother animations
+				'mousewheel': {'path': 'ui/jquery.mousewheel.min.js'} # jQuery plugin for mousewheel events + interactions
 			}
 			
 		},
+
+		('plugins', 'plugins'): {
+			
+			'config': {
+				'version_mode': 'getvar',
+				'bundle': 'plugins.bundle.min.js'
+			},
+
+			'assets': {
+				'jquery.fancybox': {'name': 'fancybox', 'min': True, 'version': '1.3.4'}, # Fancybox plugin for lightbox dialogues
+				'jquery.tipsy': {'name': 'tipsy', 'min': True, 'version': '1.0.0a'} # Tipsy tooltips
+			}
+		}
 		
 		'belated_png': {'path': 'util/dd_belatedpng.js'}, # Belated PNG fix
 
@@ -150,6 +163,20 @@ config['apptools.project.assets'] = {
 				'movement': {'version': 0.1}
 			}
 
+		},
+
+		# Plugin-Specific Stylesheets
+		('plugins', 'plugins'): {
+			
+			'config': {
+				'min': True,
+				'version_mode': 'getvar'
+			},
+
+			'assets': {
+				'fancybox': {'version': '1.3.4'},
+				'tipsy': {'version': '1.0.0a'}
+			}
 		}
 			
 	},
