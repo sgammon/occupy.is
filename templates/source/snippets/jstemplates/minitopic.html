@@ -1,0 +1,21 @@
+{%- autoescape off -%}{{ '{{=[% %]=}}' }}{%- endautoescape -%}
+<div id="stream-rq-[% id %]">
+	[% #topics %]
+	<div id="topic-[% key %]" class='streamitem hidden'>
+		<div class='floatleft stream-img'>
+			<div class='profile_img'>
+				<img height="85" width="85" src='http://placehold.it/85x85&text=Occupier' alt='occupier' />
+			</div>
+		</div>
+		<div class='floatleft stream-content'>
+			<div class='title'>
+				<div class='relative snapleft floatleft'><span class='noun'>sam</span> from <span class='noun'>california</span> - [% created_at %]</div>
+				<div class='close-button absolute inline snapright floatright'><a href='#'>X</a></div>
+				<div class='clearboth'></div>
+				<p>[% name %]</p>
+			</div>
+
+		</div>
+	</div>
+	[% /topics %]
+</div>

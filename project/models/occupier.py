@@ -1,4 +1,5 @@
 from project.models import OccupyModel, ndb
+from project.messages.occupier import OccupierResponse
 
 
 #### +=+=+=+ Occupiers + Accounts +=+=+=+ ####

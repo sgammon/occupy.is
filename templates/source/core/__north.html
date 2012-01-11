@@ -2,10 +2,17 @@
 
 <title>{% block title %}{% if page.title %}{{ page.title }}{% else %}{% if title %}{{ title }}{% endif %}{% endif %}{% endblock title %}</title>
 
-<!-- Stylesheets -->
+<!-- Main Stylesheets -->
 <link rel="stylesheet" href="{{ asset.style('main', 'compiled') }}">
 <link rel="stylesheet" href="{{ asset.style('app', 'occupy') }}">
 
 {% if page.ie %}
 	<link rel="stylesheet" href="{{ asset.style('ie', 'compiled') }}">
 {% endif %}
+
+<!-- Plugin Stylesheets -->
+<link rel="stylesheet" href="{{ asset.style('fancybox', 'plugins') }}">
+<link rel="stylesheet" href="{{ asset.style('tipsy', 'plugins') }}">
+<link rel="stylesheet" href="{{ asset.style('jcrop', 'plugins') }}">
+<link rel="stylesheet" href="{{ asset.style('jquery', 'plupload') }}">
+<link rel="stylesheet" href="{{ asset.style('jqui', 'plupload') }}">

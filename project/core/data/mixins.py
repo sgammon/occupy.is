@@ -57,7 +57,10 @@ class MessageConverterMixin(ModelMixin):
 
 		for k, v in self.to_dict(include=include, exclude=exclude).items():
 			if hasattr(response, k):
-				setattr(response, k, v)
+				if isinstance(v, nndb.key.Key):
+					setattr(response, k, v.urlsafe())
+				else:
+					setattr(response, k, v)
 
 		return response
 
@@ -74,7 +77,7 @@ class MessageConverterMixin(ModelMixin):
 			obj = cls(**kwargs)
 
 		for k, v in cls._properties.items():
-			if k == 'key':
+			if getattr(obj, k) is not None or k == 'key':
 				continue
 			if hasattr(message, k):
 				try:

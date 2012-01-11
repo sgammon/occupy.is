@@ -74,9 +74,33 @@ config['apptools.project.assets'] = {
 			},
 
 			'assets': {
-				'jquery.fancybox': {'name': 'fancybox', 'min': True, 'version': '1.3.4'}, # Fancybox plugin for lightbox dialogues
-				'jquery.tipsy': {'name': 'tipsy', 'min': True, 'version': '1.0.0a'} # Tipsy tooltips
-				'jquery.leanmodal': {'name': 'leanmodal', 'min': True, 'version': 1.0} # leanModal plugin for modal dialogues
+				'jquery.fancybox': {'min': True, 'version': '1.3.4'}, # Fancybox plugin for lightbox dialogues
+				'jquery.tipsy': {'min': True, 'version': '1.0.0a'}, # Tipsy tooltips
+				'jquery.leanmodal': {'min': True, 'version': 1.0}, # leanModal plugin for modal dialogues
+				'jquery.isotope': {'min': True, 'version': '1.5.06'}, # Isotope fluid layout plugin
+				'jquery.jcrop': {'min': True, 'version': '0.9.9'} # Jcrop image crop/resize plugin
+			}
+		},
+
+		### Plupload Plugin ###
+		('plupload', 'plugins/plupload'): {
+			
+			'config': {
+				'version_mode': 'getvar',
+				'bundle': 'plupload.bundle.min.js'
+			}, 
+
+			'assets': {
+				'plupload': {'min': True, 'version': '1.5.2'}, # Plupload main script
+				'queue.jquery': {'min': True, 'version': '1.5.2'}, # Upload queue for plain jQuery
+				'queue.jqui': {'min': True, 'version': '1.5.2'}, # Upload queue for jQuery UI
+				'runtime.browserplus': {'min': True, 'version': '1.5.2'}, # Yahoo BrowserPlus runtime
+				'runtime.flash': {'min': True, 'version': '1.5.2'}, # Adobe Flash runtime
+				'runtime.gears': {'min': True, 'version': '1.5.2'}, # Google Gears runtime
+				'runtime.html4': {'min': True, 'version': '1.5.2'}, # HTML4
+				'runtime.html5': {'min': True, 'version': '1.5.2'}, # HTML5
+				'runtime.silverlight': {'min': True, 'version': '1.5.2'}, # Microsoft Silverlight
+
 			}
 		}
 		
@@ -176,7 +200,22 @@ config['apptools.project.assets'] = {
 
 			'assets': {
 				'fancybox': {'version': '1.3.4'},
-				'tipsy': {'version': '1.0.0a'}
+				'tipsy': {'version': '1.0.0a'}, 
+				'jcrop': {'version': '0.9.9'}
+			}
+		}, 
+
+		# Plupload Stylesheets
+		('plupload', 'plugins/plupload'): {
+			
+			'config': {
+				'min': True,
+				'version_mode': 'getvar'
+			},
+
+			'assets': {
+				'jquery': {'version': '1.5.2'}, # Base stylesheet
+				'jqui': {'version': '1.5.2'} # jQuery UI stylesheet
 			}
 		}
 			

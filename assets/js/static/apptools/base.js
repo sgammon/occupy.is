@@ -1,35 +1,21 @@
 (function() {
-  var AppTools, CoreAPI, CoreAgentAPI, CoreDevAPI, CoreEventsAPI, CoreModelAPI, CorePushAPI, CoreRPCAPI, CoreStorageAPI, CoreSysAPI, CoreUserAPI, Expand, Find, Milk, Parse, RPCAPI, RPCRequest, TemplateCache, key;
-  var __slice = Array.prototype.slice, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-    for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-    function ctor() { this.constructor = child; }
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor;
-    child.__super__ = parent.prototype;
-    return child;
-  }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __indexOf = Array.prototype.indexOf || function(item) {
-    for (var i = 0, l = this.length; i < l; i++) {
-      if (this[i] === item) return i;
-    }
-    return -1;
-  };
+  var AppTools, CoreAPI, CoreAgentAPI, CoreDevAPI, CoreEventsAPI, CoreModelAPI, CorePushAPI, CoreRPCAPI, CoreStorageAPI, CoreSysAPI, CoreUserAPI, Expand, Find, Milk, Parse, RPCAPI, RPCRequest, TemplateCache, key,
+    __slice = Array.prototype.slice,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
   TemplateCache = {};
+
   Find = function(name, stack, value) {
     var ctx, i, part, parts, _i, _len, _ref, _ref2;
-    if (value == null) {
-      value = null;
-    }
-    if (name === '.') {
-      return stack[stack.length - 1];
-    }
+    if (value == null) value = null;
+    if (name === '.') return stack[stack.length - 1];
     _ref = name.split(/\./), name = _ref[0], parts = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
     for (i = _ref2 = stack.length - 1; _ref2 <= -1 ? i < -1 : i > -1; _ref2 <= -1 ? i++ : i--) {
-      if (stack[i] == null) {
-        continue;
-      }
-      if (!(typeof stack[i] === 'object' && name in (ctx = stack[i]))) {
-        continue;
-      }
+      if (stack[i] == null) continue;
+      if (!(typeof stack[i] === 'object' && name in (ctx = stack[i]))) continue;
       value = ctx[name];
       break;
     }
@@ -48,6 +34,7 @@
     }
     return value;
   };
+
   Expand = function() {
     var args, f, obj, tmpl;
     obj = arguments[0], tmpl = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
@@ -61,18 +48,13 @@
       return _results;
     })()).join('');
   };
+
   Parse = function(template, delimiters, section) {
     var BuildRegex, buffer, buildInterpolationTag, buildInvertedSectionTag, buildPartialTag, buildSectionTag, cache, content, contentEnd, d, error, escape, isStandalone, match, name, parseError, pos, sectionInfo, tag, tagPattern, tmpl, type, whitespace, _name, _ref, _ref2, _ref3;
-    if (delimiters == null) {
-      delimiters = ['{{', '}}'];
-    }
-    if (section == null) {
-      section = null;
-    }
+    if (delimiters == null) delimiters = ['{{', '}}'];
+    if (section == null) section = null;
     cache = (TemplateCache[_name = delimiters.join(' ')] || (TemplateCache[_name] = {}));
-    if (template in cache) {
-      return cache[template];
-    }
+    if (template in cache) return cache[template];
     buffer = [];
     BuildRegex = function() {
       var tagClose, tagOpen;
@@ -113,7 +95,7 @@
       tag = match[4] || match[6] || match[8] || match[10];
       contentEnd = (pos + content.length) - 1;
       pos = tagPattern.lastIndex;
-      isStandalone = (contentEnd === -1 || template.charAt(contentEnd) === '\n') && ((_ref2 = template.charAt(pos)) === void 0 || _ref2 === '' || _ref2 === '\r' || _ref2 === '\n');
+      isStandalone = (contentEnd === -1 || template.charAt(contentEnd) === '\n') && ((_ref2 = template.charAt(pos)) === (void 0) || _ref2 === '' || _ref2 === '\r' || _ref2 === '\n');
       if (content) {
         buffer.push((function(content) {
           return function() {
@@ -122,12 +104,8 @@
         })(content));
       }
       if (isStandalone && (type !== '' && type !== '&' && type !== '{')) {
-        if (template.charAt(pos) === '\r') {
-          pos += 1;
-        }
-        if (template.charAt(pos) === '\n') {
-          pos += 1;
-        }
+        if (template.charAt(pos) === '\r') pos += 1;
+        if (template.charAt(pos) === '\n') pos += 1;
       } else if (whitespace) {
         buffer.push((function(whitespace) {
           return function() {
@@ -149,9 +127,7 @@
               if ((value = (_ref3 = Find(name, context)) != null ? _ref3 : '') instanceof Function) {
                 value = Expand.apply(null, [this, Parse("" + (value()))].concat(__slice.call(arguments)));
               }
-              if (!is_unescaped) {
-                value = this.escape("" + value);
-              }
+              if (!is_unescaped) value = this.escape("" + value);
               return "" + value;
             };
           };
@@ -162,9 +138,7 @@
             return function(context, partials) {
               var partial;
               partial = partials(name).toString();
-              if (indentation) {
-                partial = partial.replace(/^(?=.)/gm, indentation);
-              }
+              if (indentation) partial = partial.replace(/^(?=.)/gm, indentation);
               return Expand.apply(null, [this, Parse(partial)].concat(__slice.call(arguments)));
             };
           };
@@ -183,9 +157,7 @@
               var parsed, result, v, value;
               value = Find(name, context) || [];
               tmpl = value instanceof Function ? value(raw) : raw;
-              if (!(value instanceof Array)) {
-                value = [value];
-              }
+              if (!(value instanceof Array)) value = [value];
               parsed = Parse(tmpl || '', delims);
               context.push(value);
               result = (function() {
@@ -206,9 +178,7 @@
             return function(context) {
               var value;
               value = Find(name, context) || [];
-              if (!(value instanceof Array)) {
-                value = [1];
-              }
+              if (!(value instanceof Array)) value = [1];
               value = value.length === 0 ? Parse(raw, delims) : [];
               return Expand.apply(null, [this, value].concat(__slice.call(arguments)));
             };
@@ -221,19 +191,15 @@
           } else if (tag !== (name = section.name)) {
             error = "End Section tag closes '" + tag + "'; expected '" + name + "'!";
           }
-          if (error) {
-            throw parseError(tagPattern.lastIndex, error);
-          }
-          template = template.slice(section.start, (contentEnd + 1) || 9e9);
+          if (error) throw parseError(tagPattern.lastIndex, error);
+          template = template.slice(section.start, contentEnd + 1 || 9e9);
           cache[template] = buffer;
           return [template, pos];
         case '=':
           if ((delimiters = tag.split(/\s+/)).length !== 2) {
             error = "Set Delimiters tags should have two and only two values!";
           }
-          if (error) {
-            throw parseError(tagPattern.lastIndex, error);
-          }
+          if (error) throw parseError(tagPattern.lastIndex, error);
           escape = /[-[\]{}()*+?.,\\^$|#]/g;
           delimiters = (function() {
             var _i, _len, _results;
@@ -251,9 +217,7 @@
       }
       tagPattern.lastIndex = pos != null ? pos : template.length;
     }
-    if (section != null) {
-      throw section.error;
-    }
+    if (section != null) throw section.error;
     if (template.length !== pos) {
       buffer.push(function() {
         return template.slice(pos);
@@ -261,6 +225,7 @@
     }
     return cache[template] = buffer;
   };
+
   Milk = {
     VERSION: '1.2.0',
     helpers: [],
@@ -279,15 +244,11 @@
     },
     render: function(template, data, partials) {
       var context;
-      if (partials == null) {
-        partials = null;
-      }
+      if (partials == null) partials = null;
       if (!((partials || (partials = this.partials || {})) instanceof Function)) {
         partials = (function(partials) {
           return function(name) {
-            if (!(name in partials)) {
-              throw "Unknown partial '" + name + "'!";
-            }
+            if (!(name in partials)) throw "Unknown partial '" + name + "'!";
             return Find(name, [partials]);
           };
         })(partials);
@@ -296,6 +257,7 @@
       return Expand(this, Parse(template), context.concat([data]), partials);
     }
   };
+
   if (typeof exports !== "undefined" && exports !== null) {
     for (key in Milk) {
       exports[key] = Milk[key];
@@ -303,33 +265,55 @@
   } else {
     this.Milk = Milk;
   }
+
   CoreAPI = (function() {
+
     function CoreAPI() {}
+
     return CoreAPI;
+
   })();
-  CoreSysAPI = (function() {
-    __extends(CoreSysAPI, CoreAPI);
+
+  CoreSysAPI = (function(_super) {
+
+    __extends(CoreSysAPI, _super);
+
     function CoreSysAPI() {
       CoreSysAPI.__super__.constructor.apply(this, arguments);
     }
+
     return CoreSysAPI;
-  })();
-  CoreAgentAPI = (function() {
-    __extends(CoreAgentAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreAgentAPI = (function(_super) {
+
+    __extends(CoreAgentAPI, _super);
+
     function CoreAgentAPI() {
       CoreAgentAPI.__super__.constructor.apply(this, arguments);
     }
+
     return CoreAgentAPI;
-  })();
-  CoreModelAPI = (function() {
-    __extends(CoreModelAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreModelAPI = (function(_super) {
+
+    __extends(CoreModelAPI, _super);
+
     function CoreModelAPI() {
       CoreModelAPI.__super__.constructor.apply(this, arguments);
     }
+
     return CoreModelAPI;
-  })();
-  CoreDevAPI = (function() {
-    __extends(CoreDevAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreDevAPI = (function(_super) {
+
+    __extends(CoreDevAPI, _super);
+
     function CoreDevAPI(fcm) {
       this.verbose = __bind(this.verbose, this);
       this.error = __bind(this.error, this);
@@ -344,30 +328,30 @@
         verbose: true
       };
     }
+
     CoreDevAPI.prototype.setDebug = function(debug) {
       this.debug = debug;
       return console.log("[CoreDev] Debug has been set.", this.debug);
     };
+
     CoreDevAPI.prototype.log = function() {
       var context, message, module;
       module = arguments[0], message = arguments[1], context = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
-      if (!(context != null)) {
-        context = '{no context}';
-      }
+      if (!(context != null)) context = '{no context}';
       if (this.debug.logging === true) {
         console.log.apply(console, ["[" + module + "] INFO: " + message].concat(__slice.call(context)));
       }
     };
+
     CoreDevAPI.prototype.eventlog = function() {
       var context, sublabel;
       sublabel = arguments[0], context = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (!(context != null)) {
-        context = '{no context}';
-      }
+      if (!(context != null)) context = '{no context}';
       if (this.debug.eventlog === true) {
         console.log.apply(console, ["[EventLog] " + sublabel].concat(__slice.call(context)));
       }
     };
+
     CoreDevAPI.prototype.error = function() {
       var context, message, module;
       module = arguments[0], message = arguments[1], context = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
@@ -375,6 +359,7 @@
         console.log.apply(console, ["[" + module + "] ERROR: " + message].concat(__slice.call(context)));
       }
     };
+
     CoreDevAPI.prototype.verbose = function() {
       var context, message, module;
       module = arguments[0], message = arguments[1], context = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
@@ -382,10 +367,15 @@
         this.log.apply(this, [module, message].concat(__slice.call(context)));
       }
     };
+
     return CoreDevAPI;
-  })();
-  CoreAgentAPI = (function() {
-    __extends(CoreAgentAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreAgentAPI = (function(_super) {
+
+    __extends(CoreAgentAPI, _super);
+
     function CoreAgentAPI(apptools) {
       this._data = {};
       this.platform = {};
@@ -470,24 +460,22 @@
         ]
       };
     }
+
     CoreAgentAPI.prototype._makeMatch = function(data) {
-      var prop, string, value, _i, _len, _results;
-      _results = [];
+      var prop, string, value, _i, _len;
       for (_i = 0, _len = data.length; _i < _len; _i++) {
         value = data[_i];
         string = value.string;
         prop = value.prop;
         this._data.versionSearchString = value.versionSearch || value.identity;
         if (string !== null) {
-          if (value.string.indexOf(value.subString) !== -1) {
-            return value.identity;
-          }
+          if (value.string.indexOf(value.subString) !== -1) return value.identity;
         } else if (prop) {
           return value.identity;
         }
       }
-      return _results;
     };
+
     CoreAgentAPI.prototype._makeVersion = function(dataString) {
       var index;
       index = dataString.indexOf(this._data.versionSearchString);
@@ -495,6 +483,7 @@
         return parseFloat(dataString.substring(index + this._data.versionSearchString.length + 1));
       }
     };
+
     CoreAgentAPI.prototype.discover = function() {
       var browser, mobile, os, type, version;
       browser = this._makeMatch(this._data.browsers) || "unknown";
@@ -524,22 +513,28 @@
         ajax: $.support.ajax
       };
     };
+
     return CoreAgentAPI;
-  })();
-  CoreEventsAPI = (function() {
-    __extends(CoreEventsAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreEventsAPI = (function(_super) {
+
+    __extends(CoreEventsAPI, _super);
+
     function CoreEventsAPI(apptools) {
+      var _this = this;
       this.registry = [];
       this.callchain = {};
       this.history = [];
-      this.trigger = __bind(function() {
+      this.trigger = function() {
         var args, callback_directive, event, hook_error_count, hook_exec_count, result, _i, _len, _ref;
         event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        $.apptools.dev.verbose('Events', 'Triggered event: ', event, args, this.callchain[event]);
-        if (__indexOf.call(this.registry, event) >= 0) {
+        $.apptools.dev.verbose('Events', 'Triggered event: ', event, args, _this.callchain[event]);
+        if (__indexOf.call(_this.registry, event) >= 0) {
           hook_exec_count = 0;
           hook_error_count = 0;
-          _ref = this.callchain[event].hooks;
+          _ref = _this.callchain[event].hooks;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             callback_directive = _ref[_i];
             try {
@@ -548,7 +543,7 @@
               } else {
                 result = callback_directive.fn.apply(callback_directive, args);
                 hook_exec_count++;
-                this.history.push({
+                _this.history.push({
                   event: event,
                   callback: callback_directive,
                   args: args,
@@ -558,7 +553,7 @@
               }
             } catch (error) {
               hook_error_count++;
-              this.history.push({
+              _this.history.push({
                 event: event,
                 callback: callback_directive,
                 args: args,
@@ -573,39 +568,44 @@
         } else {
           return false;
         }
-      }, this);
-      this.register = __bind(function(name) {
-        this.registry.push(name);
-        this.callchain[name] = {
+      };
+      this.register = function(name) {
+        _this.registry.push(name);
+        _this.callchain[name] = {
           hooks: []
         };
         apptools.dev.verbose('Events', 'Registered event: ', name);
         return true;
-      }, this);
-      this.hook = __bind(function(event, callback, once) {
-        if (once == null) {
-          once = false;
-        }
-        if (__indexOf.call(this.registry, event) < 0) {
-          this.register(event);
-        }
-        this.callchain[event].hooks.push({
+      };
+      this.hook = function(event, callback, once) {
+        if (once == null) once = false;
+        if (__indexOf.call(_this.registry, event) < 0) _this.register(event);
+        _this.callchain[event].hooks.push({
           fn: callback,
           once: once,
           has_run: false
         });
         apptools.dev.verbose('Events', 'Hook registered on event: ', event);
         return true;
-      }, this);
+      };
     }
+
     return CoreEventsAPI;
-  })();
-  CoreStorageAPI = (function() {
-    __extends(CoreStorageAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreStorageAPI = (function(_super) {
+
+    __extends(CoreStorageAPI, _super);
+
     function CoreStorageAPI(apptools) {}
+
     return CoreStorageAPI;
-  })();
+
+  })(CoreAPI);
+
   RPCAPI = (function() {
+
     function RPCAPI(name, base_uri, methods, config) {
       var method, _i, _len, _ref;
       this.name = name;
@@ -620,36 +620,22 @@
         }
       }
     }
+
     RPCAPI.prototype._buildRPCMethod = function(method, base_uri, config) {
-      var api, rpcMethod;
+      var api, rpcMethod,
+        _this = this;
       api = this.name;
-      rpcMethod = __bind(function(params, callbacks, async, opts) {
-        if (params == null) {
-          params = {};
-        }
-        if (callbacks == null) {
-          callbacks = null;
-        }
-        if (async == null) {
-          async = false;
-        }
-        if (opts == null) {
-          opts = {};
-        }
-        return __bind(function(params, callbacks, async, opts) {
+      rpcMethod = function(params, callbacks, async, opts) {
+        if (params == null) params = {};
+        if (callbacks == null) callbacks = null;
+        if (async == null) async = false;
+        if (opts == null) opts = {};
+        return (function(params, callbacks, async, opts) {
           var request;
-          if (params == null) {
-            params = {};
-          }
-          if (callbacks == null) {
-            callbacks = null;
-          }
-          if (async == null) {
-            async = false;
-          }
-          if (opts == null) {
-            opts = {};
-          }
+          if (params == null) params = {};
+          if (callbacks == null) callbacks = null;
+          if (async == null) async = false;
+          if (opts == null) opts = {};
           request = $.apptools.api.rpc.createRPCRequest({
             method: method,
             api: api,
@@ -662,14 +648,18 @@
           } else {
             return request;
           }
-        }, this)(params, callbacks, async, opts);
-      }, this);
+        })(params, callbacks, async, opts);
+      };
       $.apptools.api.registerAPIMethod(api, method, base_uri, config);
       return rpcMethod;
     };
+
     return RPCAPI;
+
   })();
+
   RPCRequest = (function() {
+
     function RPCRequest(id, opts, agent) {
       this.params = {};
       this.action = null;
@@ -693,90 +683,84 @@
         dataType: 'json',
         contentType: 'application/json; charset=utf-8'
       };
-      if (id != null) {
-        this.envelope.id = id;
-      }
-      if (opts != null) {
-        this.envelope.opts = opts;
-      }
-      if (agent != null) {
-        this.envelope.agent = agent;
-      }
+      if (id != null) this.envelope.id = id;
+      if (opts != null) this.envelope.opts = opts;
+      if (agent != null) this.envelope.agent = agent;
     }
+
     RPCRequest.prototype.multiplex = function() {
       var _ref, _ref2;
-      if ((_ref = this.envelope) != null) {
-        _ref.opts.alt = 'channel';
-      }
+      if ((_ref = this.envelope) != null) _ref.opts.alt = 'channel';
       if ((_ref2 = this.envelope) != null) {
         _ref2.opts.token = $.apptools.push.state.token;
       }
       $.apptools.push.expect(this);
     };
+
     RPCRequest.prototype.fulfill = function() {
-      var callbacks, config, defaultFailureCallback, defaultSuccessCallback;
+      var callbacks, config, defaultFailureCallback, defaultSuccessCallback,
+        _this = this;
       callbacks = arguments[0], config = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
       if (!(callbacks != null ? callbacks.success : void 0)) {
-        defaultSuccessCallback = __bind(function(context) {
-          return $.apptools.dev.log('RPC', 'RPC succeeded but had no success callback.', this);
-        }, this);
+        defaultSuccessCallback = function(context) {
+          return $.apptools.dev.log('RPC', 'RPC succeeded but had no success callback.', _this);
+        };
         callbacks.success = defaultSuccessCallback;
       }
       if (!(callbacks != null ? callbacks.failure : void 0)) {
-        defaultFailureCallback = __bind(function(context) {
-          return $.apptools.dev.error('RPC', 'RPC failed but had no failure callback.', this);
-        }, this);
+        defaultFailureCallback = function(context) {
+          return $.apptools.dev.error('RPC', 'RPC failed but had no failure callback.', _this);
+        };
         callbacks.failure = defaultFailureCallback;
       }
       return $.apptools.api.rpc.fulfillRPCRequest(config, this, callbacks);
     };
+
     RPCRequest.prototype.setAsync = function(async) {
-      var _ref, _ref2;
-      if ((_ref = this.ajax) != null) {
-        if ((_ref2 = _ref.async) == null) {
-          _ref.async = async;
-        }
-      }
+      var _ref;
+      if ((_ref = this.ajax) != null) if (_ref.async == null) _ref.async = async;
       return this;
     };
+
     RPCRequest.prototype.setOpts = function(opts) {
-      var _ref, _ref2;
-      if ((_ref = this.envelope) != null) {
-        if ((_ref2 = _ref.opts) == null) {
-          _ref.opts = opts;
-        }
-      }
+      var _ref;
+      if ((_ref = this.envelope) != null) if (_ref.opts == null) _ref.opts = opts;
       return this;
     };
+
     RPCRequest.prototype.setAgent = function(agent) {
-      var _ref, _ref2;
+      var _ref;
       if ((_ref = this.envelope) != null) {
-        if ((_ref2 = _ref.agent) == null) {
-          _ref.agent = agent;
-        }
+        if (_ref.agent == null) _ref.agent = agent;
       }
       return this;
     };
+
     RPCRequest.prototype.setAction = function(action) {
       this.action = action;
       return this;
     };
+
     RPCRequest.prototype.setMethod = function(method) {
       this.method = method;
       return this;
     };
+
     RPCRequest.prototype.setAPI = function(api) {
       this.api = api;
       return this;
     };
+
     RPCRequest.prototype.setBaseURI = function(base_uri) {
       this.base_uri = base_uri;
       return this;
     };
+
     RPCRequest.prototype.setParams = function(params) {
       this.params = params != null ? params : {};
       return this;
     };
+
     RPCRequest.prototype.payload = function() {
       var _payload;
       _payload = {
@@ -791,12 +775,18 @@
       };
       return _payload;
     };
+
     return RPCRequest;
+
   })();
-  CoreRPCAPI = (function() {
-    __extends(CoreRPCAPI, CoreAPI);
+
+  CoreRPCAPI = (function(_super) {
+
+    __extends(CoreRPCAPI, _super);
+
     function CoreRPCAPI(apptools) {
-      var original_xhr, _ref;
+      var original_xhr, _ref,
+        _this = this;
       apptools.events.register('RPC_CREATE');
       apptools.events.register('RPC_FULFILL');
       apptools.events.register('RPC_SUCCESS');
@@ -814,28 +804,28 @@
       this.internals = {
         transports: {
           xhr: {
-            factory: __bind(function() {
+            factory: function() {
               var req;
               req = original_xhr();
               if (req) {
                 if (typeof req.addEventListener === 'function') {
-                  req.addEventListener("progress", __bind(function(ev) {
+                  req.addEventListener("progress", function(ev) {
                     return apptools.events.trigger('RPC_PROGRESS', {
                       event: ev
                     });
-                  }, this), false);
+                  }, false);
                 }
               }
               return req;
-            }, this)
+            }
           }
         }
       };
       $.ajaxSetup({
         global: true,
-        xhr: __bind(function() {
-          return this.internals.transports.xhr.factory();
-        }, this)
+        xhr: function() {
+          return _this.internals.transports.xhr.factory();
+        }
       });
       this.rpc = {
         lastRequest: null,
@@ -848,15 +838,9 @@
           return $.apptools.api[name] = new RPCAPI(name, base_uri, methods, config);
         },
         _assembleRPCURL: function(method, api, prefix, base_uri) {
-          if (api == null) {
-            api = null;
-          }
-          if (prefix == null) {
-            prefix = null;
-          }
-          if (base_uri == null) {
-            base_uri = null;
-          }
+          if (api == null) api = null;
+          if (prefix == null) prefix = null;
+          if (base_uri == null) base_uri = null;
           if (api === null && base_uri === null) {
             throw "[RPC] Error: Must specify either an API or base URI to generate an RPC endpoint.";
           } else {
@@ -887,27 +871,13 @@
         createRPCRequest: function(config) {
           var request;
           request = new RPCRequest(this.provisionRequestID());
-          if (config.api != null) {
-            request.setAPI(config.api);
-          }
-          if (config.method != null) {
-            request.setMethod(config.method);
-          }
-          if (config.agent != null) {
-            request.setAgent(config.agent);
-          }
-          if (config.opts != null) {
-            request.setOpts(config.opts);
-          }
-          if (config.base_uri != null) {
-            request.setBaseURI(config.base_uri);
-          }
-          if (config.params != null) {
-            request.setParams(config.params);
-          }
-          if (config.async != null) {
-            request.setAsync(config.async);
-          }
+          if (config.api != null) request.setAPI(config.api);
+          if (config.method != null) request.setMethod(config.method);
+          if (config.agent != null) request.setAgent(config.agent);
+          if (config.opts != null) request.setOpts(config.opts);
+          if (config.base_uri != null) request.setBaseURI(config.base_uri);
+          if (config.params != null) request.setParams(config.params);
+          if (config.async != null) request.setAsync(config.async);
           $.apptools.dev.log('RPC', 'New Request', request, config);
           request.setAction(this._assembleRPCURL(request.method, request.api, this.action_prefix, this.base_rpc_uri));
           return request;
@@ -945,7 +915,8 @@
           };
           $.apptools.events.trigger('RPC_FULFILL', context);
           (function(request, callbacks) {
-            var amplify, xhr, xhr_action, xhr_settings, _ref2, _ref3;
+            var amplify, xhr, xhr_action, xhr_settings, _ref2, _ref3,
+              _this = this;
             apptools = window.apptools;
             xhr_settings = {
               resourceId: request.api + '.' + request.method,
@@ -960,7 +931,7 @@
               processData: false,
               ifModified: request.ajax.ifModified,
               contentType: request.ajax.contentType,
-              beforeSend: __bind(function(xhr, settings) {
+              beforeSend: function(xhr, settings) {
                 $.apptools.api.rpc.history[request.envelope.id].xhr = xhr;
                 if (callbacks != null) {
                   if (typeof callbacks.status === "function") {
@@ -968,8 +939,8 @@
                   }
                 }
                 return xhr;
-              }, this),
-              error: __bind(function(xhr, status, error) {
+              },
+              error: function(xhr, status, error) {
                 if (callbacks != null) {
                   if (typeof callbacks.status === "function") {
                     callbacks.status('error');
@@ -992,8 +963,8 @@
                 $.apptools.events.trigger('RPC_ERROR', context);
                 $.apptools.events.trigger('RPC_COMPLETE', context);
                 return callbacks != null ? typeof callbacks.failure === "function" ? callbacks.failure(error) : void 0 : void 0;
-              }, this),
-              success: __bind(function(data, status, xhr) {
+              },
+              success: function(data, status, xhr) {
                 if (data.status === 'ok') {
                   if (callbacks != null) {
                     if (typeof callbacks.status === "function") {
@@ -1038,7 +1009,7 @@
                   $.apptools.events.trigger('RPC_COMPLETE', context);
                   return callbacks != null ? typeof callbacks.failure === "function" ? callbacks.failure(error) : void 0 : void 0;
                 }
-              }, this),
+              },
               statusCode: {
                 404: function() {
                   $.apptools.dev.error('RPC', 'HTTP/404', 'Could not resolve RPC action URI.');
@@ -1104,9 +1075,7 @@
               decoder: this.api.decodeRPCResponse
             });
             if (config.caching != null) {
-              if (config.caching === true) {
-                base_settings.caching = 'persist';
-              }
+              if (config.caching === true) base_settings.caching = 'persist';
               return amplify.request.define(resourceId, "ajax", base_settings);
             } else {
               return amplify.request.define(resourceId, "ajax", base_settings);
@@ -1115,12 +1084,19 @@
         }
       };
     }
+
     return CoreRPCAPI;
-  })();
+
+  })(CoreAPI);
+
   window.RPCAPI = RPCAPI;
+
   window.RPCRequest = RPCRequest;
-  CorePushAPI = (function() {
-    __extends(CorePushAPI, CoreAPI);
+
+  CorePushAPI = (function(_super) {
+
+    __extends(CorePushAPI, _super);
+
     function CorePushAPI(apptools) {
       apptools.events.register('SOCKET_OPEN');
       apptools.events.register('SOCKET_CLOSE');
@@ -1152,31 +1128,40 @@
         close: function() {}
       };
     }
+
     return CorePushAPI;
-  })();
-  CoreUserAPI = (function() {
-    __extends(CoreUserAPI, CoreAPI);
+
+  })(CoreAPI);
+
+  CoreUserAPI = (function(_super) {
+
+    __extends(CoreUserAPI, _super);
+
     function CoreUserAPI(apptools) {
       this.current_user = {};
-      ({
-        this.setUserInfo: function(userinfo) {
-          $.apptools.dev.log('UserAPI', 'Setting server-injected userinfo.', userinfo);
-          this.current_user.username = userinfo.current_user;
-          this.current_user.is_user_admin = userinfo.is_user_admin;
-          this.current_user.login_url = userinfo.login_url;
-          return this.current_user.logout_url = userinfo.logout_url;
-        }
-      });
+      this.setUserInfo = function(userinfo) {
+        $.apptools.dev.log('UserAPI', 'Setting server-injected userinfo.', userinfo);
+        this.current_user.username = userinfo.current_user;
+        this.current_user.is_user_admin = userinfo.is_user_admin;
+        this.current_user.login_url = userinfo.login_url;
+        this.current_user.logout_url = userinfo.logout_url;
+        return this.current_user;
+      };
     }
+
     return CoreUserAPI;
-  })();
+
+  })(CoreAPI);
+
   AppTools = (function() {
+
     function AppTools(window) {
+      var _this = this;
       this.lib = {};
       this.lib.modernizr = window.Modernizr;
-      this.load = __bind(function(fragment) {
-        return this.lib.modernizr.load(fragment);
-      }, this);
+      this.load = function(fragment) {
+        return _this.lib.modernizr.load(fragment);
+      };
       this.lib.backbone = window.Backbone;
       this.lib.lawnchair = window.Lawnchair;
       this.dev = new CoreDevAPI(this);
@@ -1191,12 +1176,17 @@
       this.storage = new CoreStorageAPI(this);
       return this;
     }
+
     return AppTools;
+
   })();
+
   window.apptools = new AppTools(window);
+
   if (typeof $ !== "undefined" && $ !== null) {
     $.extend({
       apptools: window.apptools
     });
   }
+
 }).call(this);

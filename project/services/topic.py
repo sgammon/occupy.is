@@ -1,10 +1,14 @@
 import logging
+from datetime import datetime
+
+now = datetime.now
 
 ## topic API service
 from project.services import RemoteService, remote
 from project.messages import topic as messages
 
-from project.models import ndb, topic
+from project.models import ndb
+from project.models.topic import *
 from project.models.occupier import Occupier
 from project.models.social import Star, Comment
 from google.appengine.ext import ndb as nndb
@@ -17,12 +21,17 @@ class TopicService(RemoteService):
 
 		''' Creates new topic '''
 
-		t = Topic.from_message(request, key=nndb.key.Key(Topic, request.shortname), posted_by=nndb.key.Key(Occupier, request.posted_by))
+		if request.posted_by is not None: # we are dealing with a logged-in user's post
+			t = Topic.from_message(request, key=nndb.key.Key(Topic, request.shortname), posted_by=nndb.key.Key(Occupier, request.posted_by))
+		else:
+			t = Topic.from_message(request, key=nndb.key.Key(topic, request.shortname), posted_by=None)
 		
 		t_key = t.put()
 
 		response_obj = t.to_message()
 		response_obj.key = t_key.urlsafe()
+		response_obj.created_at = self.util.timesince(t.createdAt, now())
+
 		return response_obj
 
 	@remote.method(messages.GetTopicRequest, messages.TopicResponse)
@@ -54,19 +63,23 @@ class TopicService(RemoteService):
 
 		response_obj = messages.ListTopicResponse()
 
-		topic_query = Topic.query()
+		topic_query = Topic.query().order(-Topic.createdAt)
 		topic_results = topic_query.fetch(25)
 
 		if len(topic_results) > 0:
 			topic_responses = []
 
 			for topic in topic_results:
-				topic_responses.append(topic.to_message())
+				created_at = self.util.timesince(topic.createdAt, now())
+				topic = topic.to_message()
+				topic.created_at = created_at
+				topic_responses.append(topic)
 
 		else:
 			topic_responses = []
 		
 		response_obj.topics = topic_responses
+
 		return response_obj
 
 	@remote.method(messages.TopicVoteRequest, messages.TopicVoteResponse)
@@ -138,6 +151,6 @@ class TopicService(RemoteService):
 		s.occupier = o_key
 
 		response_obj.key = s.put().urlsafe()
-		response_obj.created = str(s.createdAt)
+		response_obj.created = self.util.timesince(s.createdAt, now())
 
 		return response_obj

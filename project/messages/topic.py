@@ -9,6 +9,7 @@ class TopicResponse(messages.Message):
 	manifesto = messages.StringField(4)
 	posted_by = messages.StringField(5)
 	edited_by = messages.StringField(6)
+	created_at = messages.StringField(7)
 
 
 class NewTopicRequest(messages.Message):
