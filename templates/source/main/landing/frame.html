@@ -67,17 +67,14 @@ function get_topic(ctx)
 function list_topics()
 {
 
-	var request = $.apptools.api.topic.list()
-
-	request.fulfill({
+	var request = new Topic().list({}, {
 	
-		success: function (response)
+		success: function (objects, response)
 		{
-			$.apptools.dev.verbose('TopicPull', 'Successfully pulled topics.', response);
+			$.apptools.dev.verbose('TopicPull', 'Successfully pulled topics.', objects, response);
 			
 			response.id = request.id;
 			var rendered_stream = Milk.render(document.getElementById('streamitem').innerHTML, response);
-			$.apptools.dev.verbose('TopicRender', 'Resulting stream.', rendered_stream);
 
 			$('#streamcontainer').html(rendered_stream);
 		},
@@ -94,18 +91,6 @@ function list_topics()
 
 function post_topic(topic_name)
 {
-	callbacks = {
-		success: function (response)
-		{
-			$.apptools.dev.log('PostTopic', 'Topic posted successfully.', response);
-			alert('topic posted successfully');
-		},
-		failure: function (error)
-		{
-			$.apptools.dev.error('PostTopic', 'Error encountered when posting topic.', error);
-			alert('topic error!!');
-		}
-	};
 
 	var params = {
 		name: topic_name,
@@ -116,8 +101,28 @@ function post_topic(topic_name)
 	{
 		params.posted_by = $.apptools.user.current_user.username;
 	}
-	var request = $.apptools.api.topic.new(params).fulfill(callbacks);
-	return request;
+
+	var request = Topic.new(params, {
+	
+		success: function (object, response)
+		{
+			$.apptools.dev.verbose('TopicCreate', 'Successfully created topic.', object, response);
+			
+			response.id = request.id;
+			response.topics = [response.topic];
+			var rendered_stream = Milk.render(document.getElementById('streamitem').innerHTML, response);
+
+			$('#streamcontainer').html(rendered_stream+document.getElementById('streamcontainer').innerHTML);
+		},
+
+		failure: function (error)
+		{
+			alert('There was an error creating your topic. Check the console.');
+			$.apptools.dev.error('TopicCreate', 'Failed to create new topic.', error);
+		}
+
+	});
+
 }
 
 function do_animations_and_get_topics()

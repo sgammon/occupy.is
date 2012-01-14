@@ -23,5 +23,14 @@
 {% block page_scripts %}{% endblock %}
 {% endblock %}
 {% block postsouth %}{% endblock %}
+
+{% block PLATFORM_READY %}
+<script>
+$(document).ready(function () {
+	$.apptools.events.trigger('PLATFORM_READY', $.apptools, $.occupy);
+});
+</script>
+{% endblock %}
+
 </body>
 </html>

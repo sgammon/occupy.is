@@ -1187,6 +1187,7 @@
     $.extend({
       apptools: window.apptools
     });
+    $.apptools.events.trigger('PLATFORM_INIT', $.apptools);
   }
 
 }).call(this);

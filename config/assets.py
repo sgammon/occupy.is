@@ -100,9 +100,8 @@ config['apptools.project.assets'] = {
 				'runtime.html4': {'min': True, 'version': '1.5.2'}, # HTML4
 				'runtime.html5': {'min': True, 'version': '1.5.2'}, # HTML5
 				'runtime.silverlight': {'min': True, 'version': '1.5.2'}, # Microsoft Silverlight
-
 			}
-		}
+		},
 		
 		'belated_png': {'path': 'util/dd_belatedpng.js'}, # Belated PNG fix
 
@@ -201,7 +200,8 @@ config['apptools.project.assets'] = {
 			'assets': {
 				'fancybox': {'version': '1.3.4'},
 				'tipsy': {'version': '1.0.0a'}, 
-				'jcrop': {'version': '0.9.9'}
+				'jcrop': {'version': '0.9.9'},
+				'isotope': {'version': '1.5.06'}
 			}
 		}, 
 
@@ -218,12 +218,23 @@ config['apptools.project.assets'] = {
 				'jqui': {'version': '1.5.2'} # jQuery UI stylesheet
 			}
 		}
-			
 	},
 
 	
 	# Other Assets
 	'ext': {
-	 },
-	
+		# Plupload Runtimes for Flash and Silverlight
+		('plupload', 'plupload'): {
+			
+			'config': {
+				'min' : True,
+				'version_mode': 'getvar'
+			},
+
+			'assets': {
+				'runtime.flash': {'path': 'plupload/runtime.flash.swf'},
+				'runtime.silverlight': {'path': 'plupload/runtime.silverlight.xap'}
+			}
+		}
+	 }
 }

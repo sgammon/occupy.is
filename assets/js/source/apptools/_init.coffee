@@ -50,3 +50,4 @@ class AppTools
 window.apptools = new AppTools(window)
 if $?
 	$.extend(apptools: window.apptools)
+	$.apptools.events.trigger('PLATFORM_INIT', $.apptools);
