@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ############################################################
-## Notifier pipelines - for notifyin' yur userz           ##
+## Notifier pipelines - for notifyin' yur userz			  ##
 ############################################################
 ##                                                        ##
 ## Authors:                                               ##
@@ -9,10 +9,11 @@
 ##		- Tyler Porras (tyler@momentum.io)                ##
 ##                                                        ##
 ## History:                                               ##
-##  - Tyler Porras Tue. Dec. 27.2011 1:04pm               ##
-##	- built XmppSendPipeline, ChannelSendPipeline         ##
+## 	 - Tyler Porras Tue. Dec. 27.2011 1:04pm              ##
+##		- built XmppSendPipeline, ChannelSendPipeline     ##
 ##                                                        ##
 ############################################################
+
 
 from project.pipelines import OccupyPipeline
 from google.appengine.api import xmpp
@@ -22,10 +23,6 @@ from google.appengine.api import mail
 
 
 
-### +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ ###
-### 		NotifierPipeline
-### Inherits from: OccupyPipeline
-### +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ ###
 class NotifierPipeline(OccupyPipeline):
  	
 	def run(self):
@@ -33,7 +30,7 @@ class NotifierPipeline(OccupyPipeline):
 
 
 ### +=+=+=+ EmailNotifier Pipelines +=+=+=+ ###
-class EmailSendPipeline(NotifierPipeline):
+class SendEmail(NotifierPipeline):
 
 	''' A pipeline that can send email. '''
 
@@ -47,7 +44,7 @@ class EmailSendPipeline(NotifierPipeline):
 		## Raises an error if the message cannot send	
 		except Exception, e:
 			
-			self.log.error('An error was encountered trying to send an email: '+str(e))
+		self.log.error('An error was encountered trying to send an email: '+str(e))
 		
 		## sends the message
 		return result
@@ -55,22 +52,22 @@ class EmailSendPipeline(NotifierPipeline):
 
 
 class XmppSendPipeline(NotifierPipeline):
-  
+
 	''' Hook-in for XMPP notifications. '''
 	
 	def run(self, *args, **kwargs):
 
 	     try:
 		     ##Using Xmpp to send notification to user
-		     send_to_user = xmpp.send_message(*args, **kwargs)
+		     result = xmpp.send_message(*args, **kwargs)
 
          ## Raises error if notification cannot send
 		 except Exception, e:
 		 	
-		 	self.log.error('An error was encountered while trying to send an XMPP notification: '+str(e))
-           
+		 	self.log.error('An error was encountered while trying to send an XMPP notification: '+str(r))
+         
          ## Sends the notification 
-		 return send_to_user
+		 return result
 		 		
 
 
@@ -87,7 +84,7 @@ class ChannelSendPipeline(NotifierPipeline):
        ## Raises error if specified Client ID is malformed
         except InvalidChannelClientIdError, e:
 
-        	self.log.error('An error was encountered while trying to establish a Channel: '+str(e))
+        	self.log.error('An error was encountered while trying to establish a Channel: '+str(e)),
         
         ## Raises error if specified message is malformed       
         except InvalidMessageError, e:
@@ -103,3 +100,4 @@ class ChannelSendPipeline(NotifierPipeline):
        
         ## Pushes notification to user
         return send_notification
+

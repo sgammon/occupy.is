@@ -17,15 +17,16 @@
 ##      - built VoteCounter                               ##
 ##   -Tyler Porras Mon. Jan. 9. 2012 10:26 am             ##
 ##      - built Topic/Comment/Star counters               ##
-##   -Tyler Porras Mon. Jan. 9. 2012 1:26 pm              ##
-##      - edited pipelines                                ##
-##                                                        ##              
+##                                                        ##
+##   -Tyler Porras Sat. Jan. 14. 2012. 1:13 am            ##   
+##      - trimmed up code, added comments.                ##
+##                                                        ##
+##                                                        ##
 ############################################################
 from project.pipelines import OccupyPipeline
 from project.models import ndb
 from project.models.topic import Upvote, Downvote
 from project.models.social import Comment, Star
-from google.appengine.ext import db
 from google.appengine.ext import ndb as nndb
 from google.appengine.ext.ndb import tasklets, context, query
 from google.appengine.datastore.datastore_query import Cursor
@@ -38,17 +39,19 @@ class AnalyzerPipeline(OccupyPipeline):
     
     ''' Base for analyzer pipelines. '''
     
-
+    ''' function for counting queries for stats. '''
     def getCountForParent(self, query, stack=0):
         
-        count_queries = query.count(500)
+        count = query.count(500)
         
-        if count_queries < 500:
-            return stack+count_queries
+        if count < 500:
+            return stack+count
+        
         else:
             return self.getCountForParent(query.with_cursor(query.cursor_after()), stack=stack+500)
             
     query_options = query.QueryOptions(keys_only=True, limit=500, produce_cursors=True, batch_size=200)
+        
 
     
     def run(self):
@@ -78,17 +81,9 @@ class ContentActionPipeline(AnalyzerPipeline):
 #### +=+=+=+  Counter Pipelines  +=+=+=+ ####
 class TopicCounter(ContentActionPipeline):
 
-    ''' Pipeline used for counting topics '''
-
-    def run(self, parent_key):
-        
-        try:
-            parent_k = nndb.key.Key(urlsafe=str(parent_key)) # parent should be a Movement, Profile Page, etc
-            parent = parent_k.get()
-        except Exception, e:
-            self.log.error('Invalid parent key: '+str(e))
-            raise
-            return False
+    ''' Pipeline used for counting topics via keys. '''
+     
+      def run(self, parent_key=topic_key):
         
         topic_queries = []
         topics = [Topic]
@@ -96,15 +91,14 @@ class TopicCounter(ContentActionPipeline):
         for topic in topics:
             topic_queries.append(topic, topic.query(ancestor=parent, options=query_options))
         
-        results = {}
-        for topic, query in query_options:
+        ''' Dictionary for storing the counted topics via keys. '''
+        
+        results = {} ## This is a dict for topic results to be spawned later.
+        for topic, query in topic_queries:
             results[topic] = self.getCountForParent(query)
         
-        count_results = []
-        for k, v in results.items():
-            count_results.append((k.kind(), v))
-
-        return dict(count_results)
+        ''' returns a dict that stores the topics by key. '''
+        return dict([k.kind(), v for topic, topic_key in results.items())])
 
 
 
@@ -112,17 +106,8 @@ class TopicCounter(ContentActionPipeline):
 class CommentCounter(ContentActionPipeline):
 
     ''' Pipeline used for counting posted comments per topic. '''
-
-    def run(self, parent_key):
-
-        try: 
-            parent_k = nndb.key.Key(urlsafe=str(parent_key)) # should be a topic
-            parent = parent_k.get()
-        
-        except Exception, e:
-            self.log.error('Invalid parent key: '+str(e))
-            raise
-            return False
+     
+      def run(self, parent_key=comment_key):
         
         comment_queries = []
         comments = [Comment]
@@ -131,14 +116,11 @@ class CommentCounter(ContentActionPipeline):
             comment_queries.append(comment, comment.query(ancestor=parent, options=query_options))
 
         results = {}
-        for comment, query in query_options:
+        for comment, query in comment_queries:
             results[comment] = self.getCountForParent(query)
 
-        count_results = []
-        for k, v in results.items():
-            count_results.append((k.kind(), v))
-
-        return dict(count_results)
+        ''' returns a dict that stores comments by key. ''' 
+        return dict([k.kind(), v for comment, comment_key in results.items()])
 
 
 
@@ -147,16 +129,10 @@ class StarCounter(SocialActionPipeline):
 
     ''' Pipeline used for counting stars on comments and topics. '''
             
-    def run(self, parent_key):
+    def run(self, parent_key=star_key):
         
-        try:
-            parent_k = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
-            parent = parent_k.get()
-        except Exception, e:
-            self.log.error('Invalid parent key: '+str(e))
-            raise
-            return False 
-
+        ''' List for keeping track of star queries. '''
+        
         star_queries = []
         stars = [Star]
 
@@ -164,14 +140,11 @@ class StarCounter(SocialActionPipeline):
             star_queries.append(star, star.query(ancestor=parent, options=query_options))
         
         results = {}
-        for star, query in query_options:
+        for star, query in star_queries:
             results[star] = self.getCountForParent(query)
-   
-        count_results = []
-        for k, v in results.items():
-            count_results.append((k.kind(), v))
         
-        return dict(count_results)
+        ''' returns dict that stores stars by key. '''
+        return dict([k.kind(), v for star, star_key in results.items()])
 
 
 
@@ -181,28 +154,18 @@ class VoteCounter(SocialActionPipeline):
     ''' Pipeline for up/down votes on topics AND comments, per topic and comment. '''
 
 
-    def run(self, parent_key):
+    def run(self, parent_key=vote_key):
 
-        try:
-            parent_k = nndb.key.Key(urlsafe=str(parent_key)) # should either be a topic or a comment
-            parent = parent_k.get()
-        except Exception, e:
-            self.log.error('Invalid parent key: '+str(e))
-            raise
-            return False
-        
         vote_queries = []
+        ''' stores count for upvotes and downvotes. '''  ## ToDo: include a sum of these in a future pipeline.
         vote_types = [Upvote, Downvote]
         
         for vote_type in vote_types:
             vote_queries.append(vote_type, vote_type.query(ancestor=parent, options=query_options))
-
-        results = {}
+        
+        results = {}     
         for vote_type, query in vote_queries:
             results[vote_type] = self.getCountForParent(query)
-
-        count_results = []
-        for k, v in results.items():
-            count_results.append((k.kind(), v))
-
-        return dict(count_results)
+       
+        ''' returns a  a count of each type of vote: up and down, by key.  '''
+        return dict([k.kind(), v for vote_type, parent_k in results.items()])
