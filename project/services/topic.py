@@ -30,7 +30,7 @@ class TopicService(RemoteService):
 		''' Returns a topic '''
 
 		if request.key is None:
-			t_key= nndb.key.Key(Topic, request.shortname)
+			t_key = nndb.key.Key(Topic, request.shortname)
 		
 		elif request.shortname is None:
 			t_key = Topic.Key(urlsafe=request.key)

@@ -27,8 +27,6 @@ libraries:
   version: "latest"
 - name: jinja2
   version: "latest"
-- name: markupsafe
-  version: "latest"
 - name: webob
   version: "latest"
 - name: lxml
@@ -184,6 +182,9 @@ handlers:
   script: main.services
   login: optional
   auth_fail_action: unauthorized
+
+- url: /_ah/pipeline(.*?)
+  script: main.pipelines
   
 ###### Send to Tipfy
 - url: /.*
