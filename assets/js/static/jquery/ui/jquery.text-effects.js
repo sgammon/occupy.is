@@ -37,7 +37,7 @@
             $ele.text('');
             var timer = setInterval(function() {
                 $ele.text(str.substring(0, progress) + str.substring(progress, str.length).replace(replace, random));
-                progress += inc
+                progress += inc;
                 if (progress >= str.length + inc) clearInterval(timer);
             }, 100);
         });
@@ -81,7 +81,7 @@
                 }
                 for (i = 0; i < choose.length; i++) state[choose[i]] = random();
                 $ele.text(state.join(''));
-                if (choose.length == 0) clearInterval(timer);
+                if (choose.length === 0) clearInterval(timer);
             }, 100);
         });
         return this;

@@ -1,5 +1,3 @@
-
-
 class OccupyController
 
 class OccupyView extends Backbone.View

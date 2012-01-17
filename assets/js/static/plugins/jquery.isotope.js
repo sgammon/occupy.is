@@ -58,7 +58,7 @@
    * Modernizr v1.6ish: miniModernizr for Isotope
    * http://www.modernizr.com
    *
-   * Developed by: 
+   * Developed by:
    * - Faruk Ates  http://farukat.es/
    * - Paul Irish  http://paulirish.com/
    *
@@ -146,7 +146,7 @@
   if ( Modernizr.csstransforms ) {
     
         // i.e. transformFnNotations.scale(0.5) >> 'scale3d( 0.5, 0.5, 1)'
-    var transformFnNotations = Modernizr.csstransforms3d ? 
+    var transformFnNotations = Modernizr.csstransforms3d ?
       { // 3D transform functions
         translate : function ( position ) {
           return 'translate3d(' + position[0] + 'px, ' + position[1] + 'px, 0) ';
@@ -232,7 +232,7 @@
         // if ( typeof value === 'string' ) {
         //   value = value.split(' ');
         // }
-        // 
+        //
         // var i, val;
         // for ( i = 0; i < 2; i++ ) {
         //   val = value[i];
@@ -414,7 +414,7 @@
     
     _getAtoms : function( $elems ) {
       var selector = this.options.itemSelector,
-          // filter & find 
+          // filter & find
           $atoms = selector ? $elems.filter( selector ).add( $elems.find( selector ) ) : $elems,
           // base style for atoms
           atomStyle = { position: 'absolute' };
@@ -487,7 +487,7 @@
     },
     
     _updateUsingTransforms : function() {
-      var usingTransforms = this.usingTransforms = this.options.transformsEnabled && 
+      var usingTransforms = this.usingTransforms = this.options.transformsEnabled &&
         Modernizr.csstransforms && Modernizr.csstransitions && !this.isUsingJQueryAnimation;
 
       // prevent scales when transforms are disabled
@@ -998,7 +998,7 @@
           // if this element cannot fit in the current row
           props.x = 0;
           props.y = props.height;
-        } 
+        }
       
         // position the atom
         instance._pushPosition( $this, props.x, props.y );
@@ -1183,7 +1183,7 @@
           // if this element cannot fit in the current column
           props.x = props.width;
           props.y = 0;
-        } 
+        }
 
         // position the atom
         instance._pushPosition( $this, props.x, props.y );
@@ -1336,7 +1336,7 @@
   // leverages data method to either create or return $.Isotope constructor
   // A bit from jQuery UI
   //   https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js
-  // A bit from jcarousel 
+  // A bit from jcarousel
   //   https://github.com/jsor/jcarousel/blob/master/lib/jquery.jcarousel.js
 
   $.fn.isotope = function( options, callback ) {

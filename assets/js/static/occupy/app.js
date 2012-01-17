@@ -59,7 +59,7 @@
     };
 
     OccupyModel.prototype._makeObject = function(object) {
-      object = new this(object, true);
+      object = this.__proto__.constructor(object, true);
       return object;
     };
 
@@ -110,7 +110,7 @@
     OccupyModel.prototype["new"] = function(params, callbacks) {
       var injected_callbacks, request,
         _this = this;
-      request = $.apptools.api[this.kind.toLowerCase()].get(params);
+      request = $.apptools.api[this.kind.toLowerCase()]["new"](params);
       injected_callbacks = {
         success: function(response) {
           var object;
