@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import pipeline as p_main
-from pipeline import pipeline
+
+from apptools import pipelines
 
 import logging
 
 ### +=+=+=+ Occupy Pipeline +=+=+=+ ###
-class OccupyPipeline(pipeline.Pipeline):
+class OccupyPipeline(pipelines.BasePipeline):
 
 	''' Shell for the occupy pipeline. '''
  	
