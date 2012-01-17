@@ -15,7 +15,7 @@ class LandingPage extends OccupyView
         params =
 
             name: topic_name
-            shortname: (topic_name.replace /[ ]/gi, "-").toLowerCase()
+            shortname: (topic_name.replace /\s/g, "-").toLowerCase()
 
         params.posted_by = current_user if (current_user? and (typeof current_user != "undefined"))
 
