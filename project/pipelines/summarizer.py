@@ -72,9 +72,14 @@ class PrepareReport(OccupyPipeline):
 	''' Pipeline used to prepare results for export. '''
 
 	def run(self, operations):
-		
-		for 
+        results = {}
+		for blob in operations:
+			if isinstance(blob, dict):
+				for k, v in blob.items():
+					results[k] = v
+		return results
 
+	
 
 #~ ~ ~ tier ~ 2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 
@@ -82,9 +87,9 @@ class TopicSummarizer(SummarizerPipeline):
 
 	''' pipeline for: summarizing comments, stars, votes under a topic  '''
 
-	# yields results from counter pipelines/ sums up all topics
+	# Yields results from Counters, passes those results to PrepareReport, then returns those results to its parent.
 	def run(self, *args):
-		
+
 		operations = yield CommentCounter(key), StarCounter(key), VoteCounter(key)
 		report = yield PrepareReport(operations)
 		return report
@@ -94,14 +99,11 @@ class CommentSummarizer(SummarizerPipeline):
 
 	''' Pipeline for summarizing stars and votes under a comment. '''
 
-	def summarize_comments(self, *args):
-		results = []
-		key_ring[] = yield CommentCounter(key):
-
-		for key in key_ring.items():
-			results.append(topic_key)
-
-		return results.count()
+	def run(self, *args):
+		
+		operations = yield StarCounter(key), Votecounter(key)
+		report = yield PrepareReport(operations)
+		return report
 
 
 
@@ -110,8 +112,10 @@ class OccupierSummarizer(SummarizerPipeline):
 
 	''' Pipeline for summarizing user's topics, comments, stars, votes. '''
 
-	def summarize_stars(self):
-		pass
+	def run(self, *args):
+		operations = yield TopicCounter(key), CommentCounter(key), Starounter(key), VoteCounter(key)
+		report = yield PrepareReport(operations)
+		return report
 
 
 
@@ -119,5 +123,7 @@ class MovementSummarizer(SummarizerPipeline):
 
 	''' Pipeline for summarizing topics, occupiers, stars under a movement. '''
 
-	def summarize_votes(self):
-		pass
+	def run(self, *args):
+		operations = yield TopicCounter(key), StarCounter(key)
+		report = yield PrepareReport(operations)
+		return report

@@ -132,3 +132,5 @@ class VoteCounter(SocialActionPipeline):
             final_results.append((vote_type.kind(), v))
         
         return {'Vote': dict(final_result)}
+
+
